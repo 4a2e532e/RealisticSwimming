@@ -22,7 +22,7 @@ public class RSListener implements Listener {
 	@EventHandler
 	public void onPlayerMoveEvent(PlayerMoveEvent event){
 		Player p = event.getPlayer();
-		if(p.getLocation().getBlock().getType()==Material.STATIONARY_WATER && p.getVehicle()==null){
+		if(p.getLocation().getBlock().getType()==Material.STATIONARY_WATER && p.getLocation().subtract(0, RSMain.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && p.getVehicle()==null){
 			p.setGliding(true);
 		}
 	}
@@ -30,7 +30,7 @@ public class RSListener implements Listener {
 	@EventHandler
 	public void onEntityToggleGlideEvent(EntityToggleGlideEvent event){
 		if(event.getEntity() instanceof Player){
-			if(event.getEntity().getLocation().getBlock().getType()==Material.STATIONARY_WATER && event.getEntity().getVehicle()==null){
+			if(event.getEntity().getLocation().getBlock().getType()==Material.STATIONARY_WATER && event.getEntity().getLocation().subtract(0, RSMain.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && event.getEntity().getVehicle()==null){
 				event.setCancelled(true);
 			}
 		}

@@ -9,15 +9,25 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
  */
 
 package realisticSwimming;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class RSMain extends JavaPlugin{
+	
+	static int minWaterDepth;
 	
 	RSListener listener = new RSListener();
 	
 	@Override
 	public void onEnable(){
 		getServer().getPluginManager().registerEvents(listener, this);
+		
+		FileConfiguration config = this.getConfig();
+		config.addDefault("Minimal water depth", 1);
+		minWaterDepth = config.getInt("Minimal water depth");
+		
+		config.options().copyDefaults(true);
+		saveConfig();
 		
 	}
 	
