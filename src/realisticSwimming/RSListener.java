@@ -10,6 +10,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package realisticSwimming;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,7 +23,7 @@ public class RSListener implements Listener {
 	@EventHandler
 	public void onPlayerMoveEvent(PlayerMoveEvent event){
 		Player p = event.getPlayer();
-		if(p.getLocation().getBlock().getType()==Material.STATIONARY_WATER && p.getLocation().subtract(0, RSMain.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && p.getVehicle()==null){
+		if(p.getLocation().getBlock().getType()==Material.STATIONARY_WATER && p.getLocation().subtract(0, RSMain.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && p.getVehicle()==null && !playerIsInCreativeMode(p)){
 			p.setGliding(true);
 		}
 	}
@@ -30,9 +31,19 @@ public class RSListener implements Listener {
 	@EventHandler
 	public void onEntityToggleGlideEvent(EntityToggleGlideEvent event){
 		if(event.getEntity() instanceof Player){
-			if(event.getEntity().getLocation().getBlock().getType()==Material.STATIONARY_WATER && event.getEntity().getLocation().subtract(0, RSMain.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && event.getEntity().getVehicle()==null){
+			if(event.getEntity().getLocation().getBlock().getType()==Material.STATIONARY_WATER && event.getEntity().getLocation().subtract(0, RSMain.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && event.getEntity().getVehicle()==null && !playerIsInCreativeMode((Player)event.getEntity())){
 				event.setCancelled(true);
 			}
+		}
+	}
+	
+	public boolean playerIsInCreativeMode(Player p){
+		if(RSMain.enabledInCreative){
+			return false;
+		}else if(p.getGameMode()==GameMode.CREATIVE){
+			return true;
+		}else{
+			return false;
 		}
 	}
 }

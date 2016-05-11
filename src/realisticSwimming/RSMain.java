@@ -15,6 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class RSMain extends JavaPlugin{
 	
 	static int minWaterDepth;
+	static boolean enabledInCreative;
 	
 	RSListener listener = new RSListener();
 	
@@ -23,8 +24,12 @@ public class RSMain extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(listener, this);
 		
 		FileConfiguration config = this.getConfig();
+		
 		config.addDefault("Minimal water depth", 1);
 		minWaterDepth = config.getInt("Minimal water depth");
+		
+		config.addDefault("Enable swimming in creative mode", true);
+		enabledInCreative = config.getBoolean("Enable swimming in creative mode");
 		
 		config.options().copyDefaults(true);
 		saveConfig();
