@@ -5,6 +5,20 @@
   <version>1.2.0</version>
   <name>Realistic Swimming</name>
   <description>A bukkit plugin that makes swimming look more realistic</description>
+  <repositories>
+    <repository>
+        <id>spigot-repo</id>
+        <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+    </repository>
+</repositories>
+<dependencies>
+    <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.9.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+    </dependency>
+</dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
@@ -19,18 +33,3 @@
     </plugins>
   </build>
 </project>
-<repositories>
-    <repository>
-        <id>spigot-repo</id>
-        <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-    </repository>
-</repositories>
-<dependencies>
-<dependencies>
-    <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.9.4-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-    </dependency>
-</dependencies>
