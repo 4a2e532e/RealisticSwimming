@@ -39,7 +39,7 @@ public class RSListener implements Listener {
 	
 	//checks if the swim animation should be started or not
 	public boolean playerCanSwim(Player p){
-		if(playerHasPermission(p) && p.getLocation().getBlock().getType()==Material.STATIONARY_WATER && p.getLocation().subtract(0, RSMain.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && p.getVehicle()==null && !playerIsInCreativeMode(p)){
+		if(playerHasPermission(p) && p.getLocation().getBlock().getType()==Material.STATIONARY_WATER && p.getLocation().subtract(0, RSMain.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && p.getVehicle()==null && !playerIsInCreativeMode(p) && !p.isFlying()){
 			return true;
 		}else{
 			return false;
