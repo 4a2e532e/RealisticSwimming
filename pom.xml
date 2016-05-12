@@ -2,7 +2,6 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>RealisticSwimming</groupId>
   <artifactId>RealisticSwimming</artifactId>
-  <version>1.2.0</version>
   <name>Realistic Swimming</name>
   <description>A bukkit plugin that makes swimming look more realistic</description>
   <repositories>
