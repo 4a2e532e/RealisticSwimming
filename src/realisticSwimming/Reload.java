@@ -9,44 +9,31 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
  */
 
 package realisticSwimming;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 
-public class RSMain extends JavaPlugin{
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
-	static int minWaterDepth;
-	static boolean enabledInCreative;
-	static boolean permsReq;
-
-	RSListener listener = new RSListener();
-
-	@Override
-	public void onEnable(){
-		getServer().getPluginManager().registerEvents(listener, this);
-		this.getCommand("rs").setExecutor(new Reload(this));
-
-		loadConfig();
+public class Reload implements CommandExecutor {
+	
+	RSMain main;
+	
+	Reload(RSMain rsMain){
+		main = rsMain;
 	}
 
 	@Override
-	public void onDisable(){
-
+	public boolean onCommand(CommandSender sender, Command arg1, String label, String[] arg3) {
+		if((sender instanceof Player || sender instanceof ConsoleCommandSender) && arg3[0].equals("reload")){
+			main.reloadConfig();
+			main.loadConfig();
+			sender.sendMessage(ChatColor.AQUA+"[Realistic Swimming] "+ChatColor.GREEN+"Configuration reloaded!");
+			return true;
+		}
+		return false;
 	}
 
-	public void loadConfig(){
-		
-		FileConfiguration config = this.getConfig();
-
-		config.addDefault("Minimal water depth", 1);
-		minWaterDepth = config.getInt("Minimal water depth");
-
-		config.addDefault("Enable swimming in creative mode", true);
-		enabledInCreative = config.getBoolean("Enable swimming in creative mode");
-
-		config.addDefault("Permissions required", false);
-		permsReq = config.getBoolean("Permissions required");
-
-		config.options().copyDefaults(true);
-		saveConfig();
-	}
 }
