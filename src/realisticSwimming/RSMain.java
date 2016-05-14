@@ -17,6 +17,7 @@ public class RSMain extends JavaPlugin{
 	static int minWaterDepth;
 	static boolean enabledInCreative;
 	static boolean permsReq;
+	static boolean enableSwimmingUp;
 
 	RSListener listener = new RSListener();
 
@@ -45,6 +46,9 @@ public class RSMain extends JavaPlugin{
 
 		config.addDefault("Permissions required", false);
 		permsReq = config.getBoolean("Permissions required");
+		
+		config.addDefault("Enable while swimming up", true);
+		enableSwimmingUp = config.getBoolean("Enable while swimming up");
 
 		config.options().copyDefaults(true);
 		saveConfig();

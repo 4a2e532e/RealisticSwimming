@@ -24,10 +24,14 @@ public class RSListener implements Listener {
 	public void onPlayerMoveEvent(PlayerMoveEvent event){
 		Player p = event.getPlayer();
 		if(playerCanSwim(p)){
-			p.setGliding(true);
+			if(event.getTo().getY()<=event.getFrom().getY() || RSMain.enableSwimmingUp){
+				p.setGliding(true);
+			}else if(event.getTo().getY()<=62){
+				p.setGliding(false);
+			}
 		}
 	}
-	
+
 	@EventHandler
 	public void onEntityToggleGlideEvent(EntityToggleGlideEvent event){
 		if(event.getEntity() instanceof Player){
@@ -36,16 +40,19 @@ public class RSListener implements Listener {
 			}
 		}
 	}
-	
+
 	//checks if the swim animation should be started or not
 	public boolean playerCanSwim(Player p){
-		if(playerHasPermission(p) && p.getLocation().getBlock().getType()==Material.STATIONARY_WATER && p.getLocation().subtract(0, RSMain.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && p.getVehicle()==null && !playerIsInCreativeMode(p) && !p.isFlying()){
-			return true;
+		if(p.getLocation().getBlock().getType()==Material.STATIONARY_WATER && p.getLocation().subtract(0, RSMain.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && p.getVehicle()==null && !playerIsInCreativeMode(p) && !p.isFlying()){
+			if(playerHasPermission(p)){
+				return true;
+			}
+			return false;
 		}else{
 			return false;
 		}
 	}
-	
+
 	public boolean playerIsInCreativeMode(Player p){
 		if(RSMain.enabledInCreative){
 			return false;
@@ -55,7 +62,7 @@ public class RSListener implements Listener {
 			return false;
 		}
 	}
-	
+
 	public boolean playerHasPermission(Player p){
 		if(!RSMain.permsReq){
 			return true;
