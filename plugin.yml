@@ -1,6 +1,6 @@
 name: Realistic-Swimming
 main: realisticSwimming.RSMain
-version: 1.6.0
+version: 1.7.0
 author: 4a2e532e
 commands:
   rs:
@@ -8,5 +8,7 @@ commands:
 permissions:
   rs.user.swim:
     default: op
+  rs.user.boost:
+    default: false
   rs.admin.reload:
     default: op

@@ -17,7 +17,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.util.Vector;
 
 public class RSListener implements Listener {
 
@@ -45,8 +44,10 @@ public class RSListener implements Listener {
 	//checks if the swim animation should be started or not
 	public boolean playerCanSwim(Player p){
 		if(p.getLocation().getBlock().getType()==Material.STATIONARY_WATER && p.getLocation().subtract(0, RSMain.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && p.getVehicle()==null && !playerIsInCreativeMode(p) && !p.isFlying()){
-			increaseSpeed(p);
-			if(playerHasPermission(p)){
+			if(playerHasPermission(p, "rs.user.boost")){
+				increaseSpeed(p);
+			}
+			if(playerHasPermission(p, "rs.user.swim")){
 				return true;
 			}
 			return false;
@@ -65,10 +66,10 @@ public class RSListener implements Listener {
 		}
 	}
 
-	public boolean playerHasPermission(Player p){
+	public boolean playerHasPermission(Player p, String perm){
 		if(!RSMain.permsReq){
 			return true;
-		}else if(p.hasPermission("rs.user.swim")){
+		}else if(p.hasPermission(perm)){
 			return true;
 		}else{
 			return false;
