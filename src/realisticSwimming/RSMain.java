@@ -18,6 +18,7 @@ public class RSMain extends JavaPlugin{
 	static boolean enabledInCreative;
 	static boolean permsReq;
 	static boolean enableSwimmingUp;
+	static double sprintSpeed;
 
 	RSListener listener = new RSListener();
 
@@ -49,6 +50,9 @@ public class RSMain extends JavaPlugin{
 		
 		config.addDefault("Enable while swimming up", true);
 		enableSwimmingUp = config.getBoolean("Enable while swimming up");
+		
+		config.addDefault("Sprint speed", 0.3);
+		sprintSpeed = config.getDouble("Sprint speed");
 
 		config.options().copyDefaults(true);
 		saveConfig();
