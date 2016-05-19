@@ -31,6 +31,15 @@
         </configuration>
       </plugin>
     </plugins>
+    <resources>
+        <resource>
+            <directory></directory>
+            <includes>
+                <include>plugin.yml</include>
+                <include>LICENSE.txt</include>
+            </includes>
+        </resource>
+    </resources>
   </build>
   <version>1.7.0</version>
 </project>
