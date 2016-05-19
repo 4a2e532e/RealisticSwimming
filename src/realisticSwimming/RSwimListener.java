@@ -18,7 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-public class RSListener implements Listener {
+public class RSwimListener implements Listener {
 
 	@EventHandler
 	public void onPlayerMoveEvent(PlayerMoveEvent event){

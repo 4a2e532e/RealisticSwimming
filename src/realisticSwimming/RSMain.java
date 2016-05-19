@@ -20,11 +20,15 @@ public class RSMain extends JavaPlugin{
 	static boolean enableSwimmingUp;
 	static double sprintSpeed;
 
-	RSListener listener = new RSListener();
+	RSwimListener swimListener = new RSwimListener();
+	RFallListener fallListener = new RFallListener();
+	RSneakListener sneakListener = new RSneakListener(this);
 
 	@Override
 	public void onEnable(){
-		getServer().getPluginManager().registerEvents(listener, this);
+		getServer().getPluginManager().registerEvents(swimListener, this);
+		getServer().getPluginManager().registerEvents(fallListener, this);
+		getServer().getPluginManager().registerEvents(sneakListener, this);
 		this.getCommand("rs").setExecutor(new Reload(this));
 
 		loadConfig();
