@@ -19,6 +19,8 @@ public class RSMain extends JavaPlugin{
 	static boolean permsReq;
 	static boolean enableSwimmingUp;
 	static double sprintSpeed;
+	static boolean enableSneak;
+	static boolean enableFall;
 
 	RSwimListener swimListener = new RSwimListener();
 	RFallListener fallListener = new RFallListener();
@@ -57,6 +59,12 @@ public class RSMain extends JavaPlugin{
 		
 		config.addDefault("Sprint speed", 0.3);
 		sprintSpeed = config.getDouble("Sprint speed");
+		
+		config.addDefault("Enable sneak animation", false);
+		enableSneak = config.getBoolean("Enable sneak animation");
+		
+		config.addDefault("Enable fall animation", false);
+		enableFall = config.getBoolean("Enable fall animation");
 
 		config.options().copyDefaults(true);
 		saveConfig();

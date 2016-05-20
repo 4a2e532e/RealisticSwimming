@@ -18,7 +18,7 @@ public class RSneakListener implements Listener {
 	@EventHandler
 	public void onPlayerToggleSneakEvent(PlayerToggleSneakEvent event){
 		Player p = event.getPlayer();
-		if(!p.isSneaking()){
+		if(!p.isSneaking() && RSMain.enableSneak){
 			p.setGliding(true);
 		}
 	}
@@ -27,7 +27,7 @@ public class RSneakListener implements Listener {
 	public void onEntityToggleGlideEvent(EntityToggleGlideEvent event){
 		if(event.getEntity() instanceof Player){
 			Player p = (Player) event.getEntity();
-			if(p.isSneaking()){
+			if(p.isSneaking() && RSMain.enableSneak){
 				event.setCancelled(true);
 			}
 		}

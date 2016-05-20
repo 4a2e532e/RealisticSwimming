@@ -14,7 +14,7 @@ public class RFallListener implements Listener{
 		Player p = event.getPlayer();
 		//p.sendMessage(""+p.getFallDistance());
 		//p.sendMessage(""+p.getVelocity().getY());
-		if(p.getFallDistance()>3){
+		if(p.getFallDistance()>3 && RSMain.enableFall){
 			p.setGliding(true);
 		}
 	}
@@ -23,7 +23,7 @@ public class RFallListener implements Listener{
 	public void onEntityToggleGlideEvent(EntityToggleGlideEvent event){
 		if(event.getEntity() instanceof Player){
 			Player p = (Player) event.getEntity();
-			if(event.getEntity().getFallDistance()>0){
+			if(event.getEntity().getFallDistance()>0 && RSMain.enableFall){
 				p.setVelocity(new Vector(0, -1, 0));
 				event.setCancelled(true);
 			}
