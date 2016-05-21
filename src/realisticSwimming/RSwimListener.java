@@ -10,7 +10,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package realisticSwimming;
 
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -35,7 +34,7 @@ public class RSwimListener implements Listener {
 				p.setGliding(true);
 
 				//EXPERMIMENTAL fix to prevent elytra from loosing durability while swimming
-				if(elytra!=null && elytra.getType()==Material.ELYTRA && !elytra.getEnchantments().containsKey(Enchantment.DURABILITY)){
+				if(RSMain.durabilityLoss==false && elytra!=null && elytra.getType()==Material.ELYTRA && !elytra.getEnchantments().containsKey(Enchantment.DURABILITY)){
 					ItemMeta meta = elytra.getItemMeta();
 					meta.addEnchant(Enchantment.DURABILITY, 100, true);
 					elytra.setItemMeta(meta);
@@ -47,7 +46,7 @@ public class RSwimListener implements Listener {
 		}else{
 
 			//EXPERMIMENTAL fix to prevent elytra from loosing durability while swimming
-			if(elytra!=null && elytra.getType()==Material.ELYTRA && elytra.getEnchantmentLevel(Enchantment.DURABILITY)==100){
+			if(RSMain.durabilityLoss==false && elytra!=null && elytra.getType()==Material.ELYTRA && elytra.getEnchantmentLevel(Enchantment.DURABILITY)==100){
 				ItemMeta meta = elytra.getItemMeta();
 				meta.removeEnchant(Enchantment.DURABILITY);
 				elytra.setItemMeta(meta);
