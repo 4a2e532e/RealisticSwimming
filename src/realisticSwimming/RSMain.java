@@ -31,7 +31,7 @@ public class RSMain extends JavaPlugin{
 	public void onEnable(){
 		getServer().getPluginManager().registerEvents(swimListener, this);
 		getServer().getPluginManager().registerEvents(fallListener, this);
-		getServer().getPluginManager().registerEvents(sneakListener, this);
+		//getServer().getPluginManager().registerEvents(sneakListener, this);
 		this.getCommand("rs").setExecutor(new Reload(this));
 
 		loadConfig();
@@ -61,8 +61,8 @@ public class RSMain extends JavaPlugin{
 		config.addDefault("Sprint speed", 0.3);
 		sprintSpeed = config.getDouble("Sprint speed");
 		
-		config.addDefault("Enable sneak animation", false);
-		enableSneak = config.getBoolean("Enable sneak animation");
+		//config.addDefault("Enable sneak animation", false);
+		//enableSneak = config.getBoolean("Enable sneak animation");
 		
 		config.addDefault("Enable fall animation", false);
 		enableFall = config.getBoolean("Enable fall animation");
