@@ -19,12 +19,19 @@ public class RSMain extends JavaPlugin{
 	static boolean permsReq;
 	static boolean enableSwimmingUp;
 	static double sprintSpeed;
+	static boolean enableSneak;
+	static boolean enableFall;
+	static boolean durabilityLoss;
 
-	RSListener listener = new RSListener();
+	RSwimListener swimListener = new RSwimListener();
+	RFallListener fallListener = new RFallListener();
+	RSneakListener sneakListener = new RSneakListener(this);
 
 	@Override
 	public void onEnable(){
-		getServer().getPluginManager().registerEvents(listener, this);
+		getServer().getPluginManager().registerEvents(swimListener, this);
+		getServer().getPluginManager().registerEvents(fallListener, this);
+		//getServer().getPluginManager().registerEvents(sneakListener, this);
 		this.getCommand("rs").setExecutor(new Reload(this));
 
 		loadConfig();
@@ -53,6 +60,15 @@ public class RSMain extends JavaPlugin{
 		
 		config.addDefault("Sprint speed", 0.3);
 		sprintSpeed = config.getDouble("Sprint speed");
+		
+		//config.addDefault("Enable sneak animation", false);
+		//enableSneak = config.getBoolean("Enable sneak animation");
+		
+		config.addDefault("Enable fall animation", false);
+		enableFall = config.getBoolean("Enable fall animation");
+		
+		config.addDefault("Elytra looses durability while swimming", false);
+		durabilityLoss = config.getBoolean("Elytra looses durability while swimming");
 
 		config.options().copyDefaults(true);
 		saveConfig();

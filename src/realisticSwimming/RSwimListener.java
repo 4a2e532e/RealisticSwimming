@@ -12,23 +12,46 @@ package realisticSwimming;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
-public class RSListener implements Listener {
+public class RSwimListener implements Listener {
 
 	@EventHandler
 	public void onPlayerMoveEvent(PlayerMoveEvent event){
+
 		Player p = event.getPlayer();
+		ItemStack elytra = p.getInventory().getChestplate();
+
 		if(playerCanSwim(p)){
 			if(event.getTo().getY()<=event.getFrom().getY() || RSMain.enableSwimmingUp){
 				p.setGliding(true);
+
+				//EXPERMIMENTAL fix to prevent elytra from loosing durability while swimming
+				if(RSMain.durabilityLoss==false && elytra!=null && elytra.getType()==Material.ELYTRA && !elytra.getEnchantments().containsKey(Enchantment.DURABILITY)){
+					ItemMeta meta = elytra.getItemMeta();
+					meta.addEnchant(Enchantment.DURABILITY, 100, true);
+					elytra.setItemMeta(meta);
+				}
+
 			}else if(event.getTo().getY()<=62){
 				p.setGliding(false);
 			}
+		}else{
+
+			//EXPERMIMENTAL fix to prevent elytra from loosing durability while swimming
+			if(RSMain.durabilityLoss==false && elytra!=null && elytra.getType()==Material.ELYTRA && elytra.getEnchantmentLevel(Enchantment.DURABILITY)==100){
+				ItemMeta meta = elytra.getItemMeta();
+				meta.removeEnchant(Enchantment.DURABILITY);
+				elytra.setItemMeta(meta);
+			}
+
 		}
 	}
 
@@ -75,7 +98,7 @@ public class RSListener implements Listener {
 			return false;
 		}
 	}
-	
+
 	public void increaseSpeed(Player p){
 		if(p.isSprinting()){
 			p.setVelocity(p.getLocation().getDirection().multiply(RSMain.sprintSpeed));
