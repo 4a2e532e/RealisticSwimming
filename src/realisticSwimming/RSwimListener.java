@@ -68,13 +68,17 @@ public class RSwimListener implements Listener {
 	
 	@EventHandler
 	public void onInventoryClickEvent(InventoryClickEvent event){
-		if(event.getCurrentItem().getType()==Material.ELYTRA && event.getInventory().getHolder() instanceof Player){
-			ItemStack elytra = event.getCurrentItem();
-			if(RSMain.durabilityLoss==false && elytra!=null && elytra.getType()==Material.ELYTRA && elytra.getEnchantmentLevel(Enchantment.DURABILITY)==100){
-				ItemMeta meta = elytra.getItemMeta();
-				meta.removeEnchant(Enchantment.DURABILITY);
-				elytra.setItemMeta(meta);
+		try{
+			if(event.getCurrentItem().getType()==Material.ELYTRA && event.getInventory().getHolder() instanceof Player){
+				ItemStack elytra = event.getCurrentItem();
+				if(RSMain.durabilityLoss==false && elytra!=null && elytra.getType()==Material.ELYTRA && elytra.getEnchantmentLevel(Enchantment.DURABILITY)==100){
+					ItemMeta meta = elytra.getItemMeta();
+					meta.removeEnchant(Enchantment.DURABILITY);
+					elytra.setItemMeta(meta);
+				}
 			}
+		}catch(NullPointerException e){
+			
 		}
 	}
 
