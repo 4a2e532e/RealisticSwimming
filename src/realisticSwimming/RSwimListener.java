@@ -10,6 +10,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package realisticSwimming;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -17,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -60,6 +62,18 @@ public class RSwimListener implements Listener {
 		if(event.getEntity() instanceof Player){
 			if(playerCanSwim((Player)event.getEntity())){
 				event.setCancelled(true);
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onInventoryClickEvent(InventoryClickEvent event){
+		if(event.getCurrentItem().getType()==Material.ELYTRA && event.getInventory().getHolder() instanceof Player){
+			ItemStack elytra = event.getCurrentItem();
+			if(RSMain.durabilityLoss==false && elytra!=null && elytra.getType()==Material.ELYTRA && elytra.getEnchantmentLevel(Enchantment.DURABILITY)==100){
+				ItemMeta meta = elytra.getItemMeta();
+				meta.removeEnchant(Enchantment.DURABILITY);
+				elytra.setItemMeta(meta);
 			}
 		}
 	}
