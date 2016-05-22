@@ -22,6 +22,7 @@ public class RSMain extends JavaPlugin{
 	static boolean enableSneak;
 	static boolean enableFall;
 	static boolean durabilityLoss;
+	static int minFallDistance;
 
 	RSwimListener swimListener = new RSwimListener();
 	RFallListener fallListener = new RFallListener();
@@ -66,6 +67,9 @@ public class RSMain extends JavaPlugin{
 		
 		config.addDefault("Enable fall animation", false);
 		enableFall = config.getBoolean("Enable fall animation");
+		
+		config.addDefault("Minimal fall distance", 3);
+		minFallDistance = config.getInt("Minimal fall distance");
 		
 		config.addDefault("Elytra looses durability while swimming", false);
 		durabilityLoss = config.getBoolean("Elytra looses durability while swimming");

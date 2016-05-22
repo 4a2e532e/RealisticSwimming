@@ -1,6 +1,6 @@
 name: Realistic-Swimming
 main: realisticSwimming.RSMain
-version: 1.9.2
+version: 1.10.0
 author: 4a2e532e
 commands:
   rs:

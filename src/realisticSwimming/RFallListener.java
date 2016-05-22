@@ -14,7 +14,7 @@ public class RFallListener implements Listener{
 		Player p = event.getPlayer();
 		//p.sendMessage(""+p.getFallDistance());
 		//p.sendMessage(""+p.getVelocity().getY());
-		if(p.getFallDistance()>3 && RSMain.enableFall){
+		if(p.getFallDistance()>RSMain.minFallDistance && RSMain.enableFall){
 			p.setGliding(true);
 		}
 	}
