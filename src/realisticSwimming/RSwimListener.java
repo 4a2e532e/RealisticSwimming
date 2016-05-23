@@ -21,6 +21,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.Vector;
 
 public class RSwimListener implements Listener {
 
@@ -29,7 +30,7 @@ public class RSwimListener implements Listener {
 
 		Player p = event.getPlayer();
 		ItemStack elytra = p.getInventory().getChestplate();
-
+		
 		if(playerCanSwim(p)){
 			if(event.getTo().getY()<=event.getFrom().getY() || RSMain.enableSwimmingUp){
 				p.setGliding(true);
@@ -85,7 +86,7 @@ public class RSwimListener implements Listener {
 	public boolean playerCanSwim(Player p){
 		if(p.getLocation().getBlock().getType()==Material.STATIONARY_WATER && p.getLocation().subtract(0, RSMain.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && p.getVehicle()==null && !playerIsInCreativeMode(p) && !p.isFlying()){
 			if(playerHasPermission(p, "rs.user.boost")){
-				increaseSpeed(p);
+				boost(p);
 			}
 			if(playerHasPermission(p, "rs.user.swim")){
 				return true;
@@ -116,8 +117,8 @@ public class RSwimListener implements Listener {
 		}
 	}
 
-	public void increaseSpeed(Player p){
-		if(p.isSprinting()){
+	public void boost(Player p){
+		if(p.isSprinting() && (p.getLocation().getDirection().getY()<-0.1 || !RSMain.ehmCompatibility)){
 			p.setVelocity(p.getLocation().getDirection().multiply(RSMain.sprintSpeed));
 		}
 	}

@@ -23,6 +23,7 @@ public class RSMain extends JavaPlugin{
 	static boolean enableFall;
 	static boolean durabilityLoss;
 	static int minFallDistance;
+	static boolean ehmCompatibility;
 
 	RSwimListener swimListener = new RSwimListener();
 	RFallListener fallListener = new RFallListener();
@@ -73,6 +74,9 @@ public class RSMain extends JavaPlugin{
 		
 		config.addDefault("Elytra looses durability while swimming", false);
 		durabilityLoss = config.getBoolean("Elytra looses durability while swimming");
+		
+		config.addDefault("EHM_compatibility mode (no speed boost when swimming up)", false);
+		ehmCompatibility = config.getBoolean("EHM_compatibility mode (no speed boost when swimming up)");
 
 		config.options().copyDefaults(true);
 		saveConfig();
