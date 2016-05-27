@@ -21,9 +21,18 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.util.Vector;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class RSwimListener implements Listener {
+	
+	private Plugin plugin;
+	
+	RSwimListener(Plugin p){
+		plugin = p;
+	}
 
 	@EventHandler
 	public void onPlayerMoveEvent(PlayerMoveEvent event){
@@ -34,6 +43,7 @@ public class RSwimListener implements Listener {
 		if(playerCanSwim(p)){
 			if(event.getTo().getY()<=event.getFrom().getY() || RSMain.enableSwimmingUp){
 				p.setGliding(true);
+				startStaminaSystem(p);
 
 				//EXPERMIMENTAL fix to prevent elytra from loosing durability while swimming
 				if(RSMain.durabilityLoss==false && elytra!=null && elytra.getType()==Material.ELYTRA && !elytra.getEnchantments().containsKey(Enchantment.DURABILITY)){
@@ -83,7 +93,7 @@ public class RSwimListener implements Listener {
 	}
 
 	//checks if the swim animation should be started or not
-	public boolean playerCanSwim(Player p){
+	public static boolean playerCanSwim(Player p){
 		if(p.getLocation().getBlock().getType()==Material.STATIONARY_WATER && p.getLocation().subtract(0, RSMain.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && p.getVehicle()==null && !playerIsInCreativeMode(p) && !p.isFlying()){
 			if(playerHasPermission(p, "rs.user.boost")){
 				boost(p);
@@ -97,7 +107,7 @@ public class RSwimListener implements Listener {
 		}
 	}
 
-	public boolean playerIsInCreativeMode(Player p){
+	public static boolean playerIsInCreativeMode(Player p){
 		if(RSMain.enabledInCreative){
 			return false;
 		}else if(p.getGameMode()==GameMode.CREATIVE){
@@ -107,7 +117,7 @@ public class RSwimListener implements Listener {
 		}
 	}
 
-	public boolean playerHasPermission(Player p, String perm){
+	public static boolean playerHasPermission(Player p, String perm){
 		if(!RSMain.permsReq){
 			return true;
 		}else if(p.hasPermission(perm)){
@@ -117,9 +127,20 @@ public class RSwimListener implements Listener {
 		}
 	}
 
-	public void boost(Player p){
+	public static void boost(Player p){
 		if(p.isSprinting() && (p.getLocation().getDirection().getY()<-0.1 || !RSMain.ehmCompatibility)){
 			p.setVelocity(p.getLocation().getDirection().multiply(RSMain.sprintSpeed));
+		}
+	}
+	
+	public void startStaminaSystem(Player p){
+		if(!p.hasMetadata("swimming") && RSMain.enableStamina){
+			FixedMetadataValue m = new FixedMetadataValue(plugin, null);
+			p.setMetadata("swimming", m);
+			
+			//start stamina system
+			@SuppressWarnings("unused")
+			BukkitTask stamina = new Stamina(plugin, p).runTaskTimer(plugin, 0, 20);
 		}
 	}
 }

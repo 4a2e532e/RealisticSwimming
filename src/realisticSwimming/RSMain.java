@@ -9,6 +9,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
  */
 
 package realisticSwimming;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,8 +25,12 @@ public class RSMain extends JavaPlugin{
 	static boolean durabilityLoss;
 	static int minFallDistance;
 	static boolean ehmCompatibility;
+	static int sprintStaminaUsage;
+	static int swimStaminaUsage;
+	static boolean enableStamina;
+	static boolean enableDrowning;
 
-	RSwimListener swimListener = new RSwimListener();
+	RSwimListener swimListener = new RSwimListener(this);
 	RFallListener fallListener = new RFallListener();
 	RSneakListener sneakListener = new RSneakListener(this);
 
@@ -77,6 +82,18 @@ public class RSMain extends JavaPlugin{
 		
 		config.addDefault("EHM_compatibility mode (no speed boost when swimming up)", false);
 		ehmCompatibility = config.getBoolean("EHM_compatibility mode (no speed boost when swimming up)");
+		
+		config.addDefault("Enable stamina", true);
+		enableStamina = config.getBoolean("Enable stamina");
+		
+		config.addDefault("Enable drowning when out of stmina", true);
+		enableDrowning = config.getBoolean("Enable drowning when out of stmina");
+		
+		config.addDefault("Sprint stamina usage", 50);
+		sprintStaminaUsage = config.getInt("Sprint stamina usage");
+		
+		config.addDefault("Normal swimming stamina usage", 10);
+		swimStaminaUsage = config.getInt("Normal swimming stamina usage");
 
 		config.options().copyDefaults(true);
 		saveConfig();
