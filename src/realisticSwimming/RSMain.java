@@ -9,8 +9,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
  */
 
 package realisticSwimming;
-import org.bukkit.Bukkit;
+import java.io.File;
+import java.io.IOException;
+
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class RSMain extends JavaPlugin{
@@ -29,6 +32,10 @@ public class RSMain extends JavaPlugin{
 	static int swimStaminaUsage;
 	static boolean enableStamina;
 	static boolean enableDrowning;
+	static String swimmingEnabled;
+	static String swimmingDisabled;
+	static String fallingEnabled;
+	static String fallingDisabled;
 
 	RSwimListener swimListener = new RSwimListener(this);
 	RFallListener fallListener = new RFallListener();
@@ -40,6 +47,8 @@ public class RSMain extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(fallListener, this);
 		//getServer().getPluginManager().registerEvents(sneakListener, this);
 		this.getCommand("rs").setExecutor(new Reload(this));
+		this.getCommand("swim").setExecutor(new ToggleSwim(this));
+		this.getCommand("fall").setExecutor(new ToggleFall(this));
 
 		loadConfig();
 	}
@@ -51,6 +60,7 @@ public class RSMain extends JavaPlugin{
 
 	public void loadConfig(){
 		
+		//setup config
 		FileConfiguration config = this.getConfig();
 
 		config.addDefault("Minimal water depth", 1);
@@ -97,5 +107,29 @@ public class RSMain extends JavaPlugin{
 
 		config.options().copyDefaults(true);
 		saveConfig();
+		
+		//setup language file
+		File language = new File(getDataFolder(), "language.yml");
+		FileConfiguration lang = YamlConfiguration.loadConfiguration(language);
+		
+		lang.addDefault("Swimming enabled", "Swim animation enabled");
+		swimmingEnabled = lang.getString("Swimming enabled");
+		
+		lang.addDefault("Swimming disabled", "Swim animation disabled");
+		swimmingDisabled = lang.getString("Swimming disabled");
+		
+		lang.addDefault("Falling enabled", "Fall animation enabled");
+		fallingEnabled = lang.getString("Falling enabled");
+		
+		lang.addDefault("Falling disabled", "Fall animation disabled");
+		fallingDisabled = lang.getString("Falling disabled");
+		
+		lang.options().copyDefaults(true);
+		
+		try {
+			lang.save(language);
+		} catch (IOException e) {
+
+		}
 	}
 }

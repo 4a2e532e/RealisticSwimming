@@ -15,7 +15,7 @@ public class RFallListener implements Listener{
 		Player p = event.getPlayer();
 		//p.sendMessage(""+p.getFallDistance());
 		//p.sendMessage(""+p.getVelocity().getY());
-		if(p.getFallDistance()>RSMain.minFallDistance && RSMain.enableFall && p.getLocation().getBlock().getType()!=Material.STATIONARY_WATER){
+		if(playerCanFall(p)){
 			p.setGliding(true);
 		}
 	}
@@ -24,10 +24,17 @@ public class RFallListener implements Listener{
 	public void onEntityToggleGlideEvent(EntityToggleGlideEvent event){
 		if(event.getEntity() instanceof Player){
 			Player p = (Player) event.getEntity();
-			if(event.getEntity().getFallDistance()>0 && RSMain.enableFall && p.getLocation().getBlock().getType()!=Material.STATIONARY_WATER && p.getLocation().subtract(0, 1, 0).getBlock().getType()!=Material.STATIONARY_WATER){
+			if(playerCanFall(p) && p.getLocation().subtract(0, 1, 0).getBlock().getType()!=Material.STATIONARY_WATER){
 				p.setVelocity(new Vector(p.getLocation().getDirection().getX()/10, -1, p.getLocation().getDirection().getZ()/10));
 				event.setCancelled(true);
 			}
 		}
+	}
+	
+	public boolean playerCanFall(Player p){
+		if(!p.hasMetadata("fallingDisabled")&& RSwimListener.playerHasPermission(p, "rs.user.fall") && p.getFallDistance()>RSMain.minFallDistance && RSMain.enableFall && p.getLocation().getBlock().getType()!=Material.STATIONARY_WATER){
+			return true;
+		}
+		return false;
 	}
 }

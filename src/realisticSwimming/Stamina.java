@@ -23,6 +23,7 @@ import org.bukkit.util.Vector;
 public class Stamina extends BukkitRunnable {
 
 	private Plugin plugin;
+	private RSwimListener sl;
 
 	private Player p;
 	private int stamina = 1000;
@@ -32,9 +33,10 @@ public class Stamina extends BukkitRunnable {
 	private String oldObjectiveName = "";
 	
 
-	Stamina(Plugin pl, Player player){
+	Stamina(Plugin pl, Player player, RSwimListener swimListener){
 		plugin = pl;
 		p = player;
+		sl = swimListener;
 		staminaObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
 		p.setScoreboard(scoreboard);
 
@@ -42,7 +44,7 @@ public class Stamina extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		if(RSwimListener.playerCanSwim(p)){
+		if(sl.playerCanSwim(p)){
 			timer = 3;
 			displayStamina(p);
 			if(stamina>0){

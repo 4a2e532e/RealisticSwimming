@@ -23,7 +23,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 public class RSwimListener implements Listener {
@@ -42,7 +41,13 @@ public class RSwimListener implements Listener {
 		
 		if(playerCanSwim(p)){
 			if(event.getTo().getY()<=event.getFrom().getY() || RSMain.enableSwimmingUp){
-				p.setGliding(true);
+				
+				//Only start swimming animation if the user did not disable it
+				if(!p.hasMetadata("swimmingDisabled")){
+					p.setGliding(true);
+				}
+				
+				//start the stamina system
 				startStaminaSystem(p);
 
 				//EXPERMIMENTAL fix to prevent elytra from loosing durability while swimming
@@ -70,7 +75,8 @@ public class RSwimListener implements Listener {
 	@EventHandler
 	public void onEntityToggleGlideEvent(EntityToggleGlideEvent event){
 		if(event.getEntity() instanceof Player){
-			if(playerCanSwim((Player)event.getEntity())){
+			Player p = (Player) event.getEntity();
+			if(playerCanSwim(p) && !p.hasMetadata("swimmingDisabled")){
 				event.setCancelled(true);
 			}
 		}
@@ -93,8 +99,9 @@ public class RSwimListener implements Listener {
 	}
 
 	//checks if the swim animation should be started or not
-	public static boolean playerCanSwim(Player p){
+	public boolean playerCanSwim(Player p){
 		if(p.getLocation().getBlock().getType()==Material.STATIONARY_WATER && p.getLocation().subtract(0, RSMain.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && p.getVehicle()==null && !playerIsInCreativeMode(p) && !p.isFlying()){
+			
 			if(playerHasPermission(p, "rs.user.boost")){
 				boost(p);
 			}
@@ -107,7 +114,7 @@ public class RSwimListener implements Listener {
 		}
 	}
 
-	public static boolean playerIsInCreativeMode(Player p){
+	public boolean playerIsInCreativeMode(Player p){
 		if(RSMain.enabledInCreative){
 			return false;
 		}else if(p.getGameMode()==GameMode.CREATIVE){
@@ -127,7 +134,7 @@ public class RSwimListener implements Listener {
 		}
 	}
 
-	public static void boost(Player p){
+	public void boost(Player p){
 		if(p.isSprinting() && (p.getLocation().getDirection().getY()<-0.1 || !RSMain.ehmCompatibility)){
 			p.setVelocity(p.getLocation().getDirection().multiply(RSMain.sprintSpeed));
 		}
@@ -140,7 +147,7 @@ public class RSwimListener implements Listener {
 			
 			//start stamina system
 			@SuppressWarnings("unused")
-			BukkitTask stamina = new Stamina(plugin, p).runTaskTimer(plugin, 0, 20);
+			BukkitTask stamina = new Stamina(plugin, p, this).runTaskTimer(plugin, 0, 20);
 		}
 	}
 }

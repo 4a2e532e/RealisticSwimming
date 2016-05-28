@@ -7,10 +7,18 @@ commands:
     permission: rs.admin.reload
     description: 'reloads the config'
     usage: '/rs reload'
+  swim:
+    description: 'Enables/disables the swimming animation.'
+    usage: '/swim <on/off>'
+  fall:
+    description: 'Enables/disables the falling animation.'
+    usage: '/fall <on/off>'
 permissions:
   rs.user.swim:
     default: op
   rs.user.boost:
-    default: false
+    default: op
+  rs.user.fall:
+    default: op
   rs.admin.reload:
     default: op

@@ -19,7 +19,7 @@ import org.bukkit.entity.Player;
 
 public class Reload implements CommandExecutor {
 
-	RSMain main;
+	private RSMain main;
 
 	Reload(RSMain rsMain){
 		main = rsMain;
@@ -27,7 +27,7 @@ public class Reload implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String label, String[] arg3) {
-		if((sender instanceof Player || sender instanceof ConsoleCommandSender) && arg3.length>0 && arg3[0].equals("reload")){
+		if((sender instanceof Player || sender instanceof ConsoleCommandSender) && arg3.length>0 && arg3[0].equalsIgnoreCase("reload")){
 			main.reloadConfig();
 			main.loadConfig();
 			sender.sendMessage(ChatColor.AQUA+"[Realistic Swimming] "+ChatColor.GREEN+"Configuration reloaded!");
