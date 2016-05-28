@@ -43,13 +43,10 @@ public class RSwimListener implements Listener {
 			if(event.getTo().getY()<=event.getFrom().getY() || RSMain.enableSwimmingUp){
 				
 				//Only start swimming animation if the user did not disable it
-				if(!p.hasMetadata("swimmingDisabled")){
+				if(!p.hasMetadata("swimmingDisabled") && playerHasPermission(p, "rs.user.swim")){
 					p.setGliding(true);
 				}
 				
-				//start the stamina system
-				startStaminaSystem(p);
-
 				//EXPERMIMENTAL fix to prevent elytra from loosing durability while swimming
 				if(RSMain.durabilityLoss==false && elytra!=null && elytra.getType()==Material.ELYTRA && !elytra.getEnchantments().containsKey(Enchantment.DURABILITY)){
 					ItemMeta meta = elytra.getItemMeta();
@@ -102,13 +99,13 @@ public class RSwimListener implements Listener {
 	public boolean playerCanSwim(Player p){
 		if(p.getLocation().getBlock().getType()==Material.STATIONARY_WATER && p.getLocation().subtract(0, RSMain.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && p.getVehicle()==null && !playerIsInCreativeMode(p) && !p.isFlying()){
 			
+			//start the stamina system
+			startStaminaSystem(p);
+			
 			if(playerHasPermission(p, "rs.user.boost")){
 				boost(p);
 			}
-			if(playerHasPermission(p, "rs.user.swim")){
-				return true;
-			}
-			return false;
+			return true;
 		}else{
 			return false;
 		}
