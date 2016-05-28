@@ -138,7 +138,7 @@ public class RSwimListener implements Listener {
 	}
 	
 	public void startStaminaSystem(Player p){
-		if(!p.hasMetadata("swimming") && RSMain.enableStamina && !playerHasPermission(p, "rs.bypass.stamina")){
+		if(!p.hasMetadata("swimming") && RSMain.enableStamina && (!playerHasPermission(p, "rs.bypass.stamina") || RSMain.permsReq==false)){
 			FixedMetadataValue m = new FixedMetadataValue(plugin, null);
 			p.setMetadata("swimming", m);
 			
