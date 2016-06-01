@@ -35,7 +35,7 @@ public class RFallListener implements Listener{
 		if(event.getEntity() instanceof Player){
 			Player p = (Player) event.getEntity();
 			if(playerCanFall(p) && p.getLocation().subtract(0, 1, 0).getBlock().getType()!=Material.STATIONARY_WATER){
-				p.setVelocity(new Vector(p.getLocation().getDirection().getX()/10, -1, p.getLocation().getDirection().getZ()/10));
+				p.setVelocity(new Vector(p.getLocation().getDirection().getX()*RSMain.fallGlideSpeed, RSMain.fallDownwardSpeed*-1, p.getLocation().getDirection().getZ()*RSMain.fallGlideSpeed));
 				event.setCancelled(true);
 			}
 		}

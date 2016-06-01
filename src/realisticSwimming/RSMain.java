@@ -36,6 +36,8 @@ public class RSMain extends JavaPlugin{
 	static String swimmingDisabled;
 	static String fallingEnabled;
 	static String fallingDisabled;
+	static double fallGlideSpeed;
+	static double fallDownwardSpeed;
 
 	RSwimListener swimListener = new RSwimListener(this);
 	RFallListener fallListener = new RFallListener();
@@ -86,6 +88,12 @@ public class RSMain extends JavaPlugin{
 		
 		config.addDefault("Minimal fall distance", 3);
 		minFallDistance = config.getInt("Minimal fall distance");
+		
+		config.addDefault("Fall glide speed", 0.1);
+		fallGlideSpeed = config.getDouble("Fall glide speed");
+		
+		config.addDefault("Fall downward speed", 1);
+		fallDownwardSpeed = config.getDouble("Fall downward speed");
 		
 		config.addDefault("Elytra looses durability while swimming", false);
 		durabilityLoss = config.getBoolean("Elytra looses durability while swimming");
