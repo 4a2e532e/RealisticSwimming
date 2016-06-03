@@ -29,7 +29,7 @@ public class Stamina extends BukkitRunnable {
 	private int stamina = 1000;
 	private int timer;
 	private Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-	private Objective staminaObjective = scoreboard.registerNewObjective("Stamina", "dummy");
+	private Objective staminaObjective = scoreboard.registerNewObjective(RSMain.stamina, "dummy");
 	private String oldObjectiveName = "";
 	
 

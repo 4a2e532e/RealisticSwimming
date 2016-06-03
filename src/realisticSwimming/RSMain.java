@@ -36,6 +36,7 @@ public class RSMain extends JavaPlugin{
 	static String swimmingDisabled;
 	static String fallingEnabled;
 	static String fallingDisabled;
+	static String stamina;
 	static double fallGlideSpeed;
 	static double fallDownwardSpeed;
 
@@ -131,6 +132,9 @@ public class RSMain extends JavaPlugin{
 		
 		lang.addDefault("Falling disabled", "Fall animation disabled");
 		fallingDisabled = lang.getString("Falling disabled");
+		
+		lang.addDefault("Stamina", "Stamina");
+		stamina = lang.getString("Stamina");
 		
 		lang.options().copyDefaults(true);
 		
