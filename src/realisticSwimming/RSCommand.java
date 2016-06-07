@@ -10,38 +10,24 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package realisticSwimming;
 
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
-public class ToggleSwim extends RSCommand {
+public abstract class RSCommand implements CommandExecutor {
 	
-	private Plugin plugin;
-	private FixedMetadataValue meta;
-	
-	ToggleSwim(Plugin pl) {
-		plugin = pl;
-		meta = new FixedMetadataValue(plugin, null);
-	}
-
 	@Override
-	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] arg3) {
-		if(sender instanceof Player && arg3.length>0){
-			Player p = (Player) sender;
-			if(arg3[0].equalsIgnoreCase("on")){
-				p.removeMetadata("swimmingDisabled", plugin);
-				sendMessage(p, RSMain.swimmingEnabled);
-				return true;
-			}else if(arg3[0].equalsIgnoreCase("off")){
-				p.setMetadata("swimmingDisabled", meta);
-				sendMessage(p, RSMain.swimmingDisabled);
-				return true;
-			}
-		}
+	public boolean onCommand(CommandSender arg0, org.bukkit.command.Command arg1, String arg2, String[] arg3) {
+		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
+	public void sendMessage(Player p, String message){
+		if(!message.equalsIgnoreCase("")){
+			p.sendMessage(message);
+		}
+	}
 }
