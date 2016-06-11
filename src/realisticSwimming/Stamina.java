@@ -28,18 +28,15 @@ public class Stamina extends BukkitRunnable {
 	private Player p;
 	private int stamina = 1000;
 	private int timer;
-	private Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-	private Objective staminaObjective = scoreboard.registerNewObjective(RSMain.stamina, "dummy");
+	private Scoreboard scoreboard;
+	private Objective staminaObjective;
 	private String oldObjectiveName = "";
-	
+
 
 	Stamina(Plugin pl, Player player, RSwimListener swimListener){
 		plugin = pl;
 		p = player;
 		sl = swimListener;
-		staminaObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
-		p.setScoreboard(scoreboard);
-
 	}
 
 	@Override
@@ -59,14 +56,13 @@ public class Stamina extends BukkitRunnable {
 		}else if(timer==0){
 			p.removeMetadata("swimming", plugin);
 			scoreboard.resetScores(oldObjectiveName);
-			//p.sendMessage("Stamina refreshed");
 			this.cancel();
 		}else{
 			timer--;
 		}
 
 	}
-	
+
 	private void displayStamina(Player p){
 		String part1 = "";
 		String part2 = "";
@@ -79,8 +75,8 @@ public class Stamina extends BukkitRunnable {
 			part2 = part2+"#";
 		}
 
-		staminaBar = part1+ChatColor.GRAY+part2;
-		
+		staminaBar = RSMain.stamina+": "+part1+ChatColor.GRAY+part2;
+
 		if(stamina>700){
 			staminaBar = ChatColor.GREEN+staminaBar;
 		}else if(stamina>400){
@@ -100,10 +96,24 @@ public class Stamina extends BukkitRunnable {
 			p.setVelocity(new Vector(0, -1, 0));
 		}
 	}
-	
+
 	private void updateScoreboard(String title){
-		scoreboard.resetScores(oldObjectiveName);
-		staminaObjective.getScore(title).setScore(stamina);
-		oldObjectiveName = title;
+		try{
+			scoreboard = p.getScoreboard();
+			staminaObjective = scoreboard.getObjective(DisplaySlot.SIDEBAR);
+			scoreboard.resetScores(oldObjectiveName);
+			staminaObjective.getScore(title).setScore(stamina);
+			oldObjectiveName = title;
+		}catch(NullPointerException e){
+			initializeScoreboard();
+		}
 	}
+
+	private void initializeScoreboard(){
+			scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+			p.setScoreboard(scoreboard);
+			staminaObjective = scoreboard.registerNewObjective(RSMain.stamina, "dummy");
+			staminaObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
+	}
+
 }
