@@ -61,5 +61,5 @@
         </resource>
     </resources>
   </build>
-  <version>1.13.2 SNAPSHOT</version>
+  <version>1.14.0</version>
 </project>

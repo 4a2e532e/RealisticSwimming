@@ -115,8 +115,8 @@ public class RSMain extends JavaPlugin{
 		config.addDefault("Normal swimming stamina usage", 10);
 		swimStaminaUsage = config.getInt("Normal swimming stamina usage");
 		
-		config.addDefault("Use BossBarApi to show stamina bar (requires BossBarApi to be installed)", false);
-		enableBossBar = config.getBoolean("Use BossBarApi to show stamina bar (requires BossBarApi to be installed)");
+		config.addDefault("Use BossBarApi to display stamina bar (requires BossBarApi to be installed)", false);
+		enableBossBar = config.getBoolean("Use BossBarApi to display stamina bar (requires BossBarApi to be installed)");
 
 		config.options().copyDefaults(true);
 		saveConfig();
