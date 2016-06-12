@@ -39,6 +39,7 @@ public class RSMain extends JavaPlugin{
 	static String stamina;
 	static double fallGlideSpeed;
 	static double fallDownwardSpeed;
+	static boolean enableBossBar;
 
 	RSwimListener swimListener = new RSwimListener(this);
 	RFallListener fallListener = new RFallListener();
@@ -113,6 +114,9 @@ public class RSMain extends JavaPlugin{
 		
 		config.addDefault("Normal swimming stamina usage", 10);
 		swimStaminaUsage = config.getInt("Normal swimming stamina usage");
+		
+		config.addDefault("Use BossBarApi to show stamina bar (requires BossBarApi to be installed)", false);
+		enableBossBar = config.getBoolean("Use BossBarApi to show stamina bar (requires BossBarApi to be installed)");
 
 		config.options().copyDefaults(true);
 		saveConfig();

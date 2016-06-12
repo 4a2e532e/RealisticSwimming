@@ -31,6 +31,7 @@ public class Stamina extends BukkitRunnable {
 	private Scoreboard scoreboard;
 	private Objective staminaObjective;
 	private String oldObjectiveName = "";
+	private StaminaBar staminaBar;
 
 
 	Stamina(Plugin pl, Player player, RSwimListener swimListener){
@@ -55,7 +56,7 @@ public class Stamina extends BukkitRunnable {
 			}
 		}else if(timer==0){
 			p.removeMetadata("swimming", plugin);
-			scoreboard.resetScores(oldObjectiveName);
+			hideStaminaBar();
 			this.cancel();
 		}else{
 			timer--;
@@ -86,7 +87,7 @@ public class Stamina extends BukkitRunnable {
 		}else{
 			staminaBar = ChatColor.DARK_RED+staminaBar;
 		}
-		updateScoreboard(staminaBar);
+		updateStaminaBar(staminaBar);
 	}
 
 	private void drown(Player p){
@@ -94,6 +95,18 @@ public class Stamina extends BukkitRunnable {
 
 		if(RSMain.enableDrowning){
 			p.setVelocity(new Vector(0, -1, 0));
+		}
+	}
+	
+	private void updateStaminaBar(String title){
+		if(RSMain.enableBossBar){
+			if(staminaBar == null){
+				initializeBossBar();
+			}else{
+				staminaBar.updateBar(stamina);
+			}
+		}else{
+			updateScoreboard(title);
 		}
 	}
 
@@ -114,6 +127,18 @@ public class Stamina extends BukkitRunnable {
 			p.setScoreboard(scoreboard);
 			staminaObjective = scoreboard.registerNewObjective(RSMain.stamina, "dummy");
 			staminaObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
+	}
+	
+	private void initializeBossBar(){
+		staminaBar = new StaminaBar(p);
+	}
+	
+	private void hideStaminaBar(){
+		if(RSMain.enableBossBar){
+			staminaBar.removeStaminaBar();
+		}else{
+			scoreboard.resetScores(oldObjectiveName);
+		}
 	}
 
 }
