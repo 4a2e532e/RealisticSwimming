@@ -13,6 +13,10 @@
 		<id>inventive-repo</id>
 		<url>https://repo.inventivetalent.org/content/groups/public/</url>
 	</repository>
+	<repository>
+        <id>bungeecord-repo</id>
+        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </repository>
 </repositories>
 <dependencies>
     <dependency>
@@ -26,6 +30,13 @@
 		<artifactId>bossbarapi</artifactId>
 		<version>2.4.1</version>
 	</dependency>
+	<dependency>
+        <groupId>net.md-5</groupId>
+        <artifactId>bungeecord-api</artifactId>
+        <version>1.9-SNAPSHOT</version>
+        <type>jar</type>
+        <scope>provided</scope>
+    </dependency>
 </dependencies>
   <build>
     <finalName>${project.artifactId}</finalName>
