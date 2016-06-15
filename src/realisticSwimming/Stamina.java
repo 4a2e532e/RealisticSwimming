@@ -42,7 +42,7 @@ public class Stamina extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		if(sl.playerCanSwim(p)){
+		if(sl.playerCanSwim(p) && p.isOnline()){
 			timer = 3;
 			displayStamina(p);
 			if(stamina>0){
@@ -54,14 +54,13 @@ public class Stamina extends BukkitRunnable {
 			}else{
 				drown(p);
 			}
-		}else if(timer==0){
+		}else if(timer==0 || !p.isOnline()){
 			p.removeMetadata("swimming", plugin);
 			hideStaminaBar();
 			this.cancel();
 		}else{
 			timer--;
 		}
-
 	}
 
 	private void displayStamina(Player p){
