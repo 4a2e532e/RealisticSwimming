@@ -133,10 +133,14 @@ public class Stamina extends BukkitRunnable {
 	}
 	
 	private void hideStaminaBar(){
-		if(RSMain.enableBossBar){
-			staminaBar.removeStaminaBar();
-		}else{
-			scoreboard.resetScores(oldObjectiveName);
+		try{
+			if(RSMain.enableBossBar){
+				staminaBar.removeStaminaBar();
+			}else{
+				scoreboard.resetScores(oldObjectiveName);
+			}
+		}catch(NullPointerException e){
+			
 		}
 	}
 
