@@ -116,8 +116,8 @@ public class RSMain extends JavaPlugin{
 		config.addDefault("Normal swimming stamina usage", 10);
 		swimStaminaUsage = config.getInt("Normal swimming stamina usage");
 		
-		config.addDefault("Stamina refresh delay in ticks", 20);
-		refreshDelay = config.getInt("Stamina refresh delay in ticks");
+		config.addDefault("Stamina update delay in ticks", 20);
+		refreshDelay = config.getInt("Stamina update delay in ticks");
 		
 		config.addDefault("Use BossBarApi to display stamina bar (requires BossBarApi to be installed)", false);
 		enableBossBar = config.getBoolean("Use BossBarApi to display stamina bar (requires BossBarApi to be installed)");
