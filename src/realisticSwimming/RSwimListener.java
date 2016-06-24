@@ -144,7 +144,7 @@ public class RSwimListener implements Listener {
 			
 			//start stamina system
 			@SuppressWarnings("unused")
-			BukkitTask stamina = new Stamina(plugin, p, this).runTaskTimer(plugin, 0, 20);
+			BukkitTask stamina = new Stamina(plugin, p, this).runTaskTimer(plugin, 0, RSMain.refreshDelay);
 		}
 	}
 }

@@ -43,13 +43,13 @@ public class Stamina extends BukkitRunnable {
 	@Override
 	public void run() {
 		if(sl.playerCanSwim(p) && p.isOnline()){
-			timer = 3;
+			timer = 3*20/RSMain.refreshDelay;
 			displayStamina(p);
 			if(stamina>0){
 				if(p.isSprinting()){
-					stamina = stamina-RSMain.sprintStaminaUsage;
+					stamina = stamina-RSMain.sprintStaminaUsage/20*RSMain.refreshDelay;
 				}else{
-					stamina = stamina-RSMain.swimStaminaUsage;
+					stamina = stamina-RSMain.swimStaminaUsage/20*RSMain.refreshDelay;
 				}
 			}else{
 				drown(p);
