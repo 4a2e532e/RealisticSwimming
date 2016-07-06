@@ -41,6 +41,7 @@ public class RSMain extends JavaPlugin{
 	static double fallDownwardSpeed;
 	static boolean enableBossBar;
 	static int refreshDelay;
+	static boolean enableBoost;
 
 	RSwimListener swimListener = new RSwimListener(this);
 	RFallListener fallListener = new RFallListener();
@@ -79,6 +80,9 @@ public class RSMain extends JavaPlugin{
 		
 		config.addDefault("Enable while swimming up", true);
 		enableSwimmingUp = config.getBoolean("Enable while swimming up");
+
+		config.addDefault("Enable speed boost/sprinting", true);
+		enableBoost = config.getBoolean("Enable speed boost/sprinting");
 		
 		config.addDefault("Sprint speed", 0.3);
 		sprintSpeed = config.getDouble("Sprint speed");

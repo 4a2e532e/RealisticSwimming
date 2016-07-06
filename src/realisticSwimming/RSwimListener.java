@@ -102,7 +102,7 @@ public class RSwimListener implements Listener {
 			//start the stamina system
 			startStaminaSystem(p);
 			
-			if(playerHasPermission(p, "rs.user.boost")){
+			if(playerHasPermission(p, "rs.user.boost") && RSMain.enableBoost){
 				boost(p);
 			}
 			return true;
