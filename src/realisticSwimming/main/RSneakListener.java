@@ -8,24 +8,27 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package realisticSwimming;
+package realisticSwimming.main;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.util.Vector;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.plugin.Plugin;
 
-public class RFallListener implements Listener{
+public class RSneakListener implements Listener {
+	
+	private Plugin plugin;
+	
+	RSneakListener(Plugin p){
+		plugin = p;
+	}
 
 	@EventHandler
-	public void onPlayerMoveEvent(PlayerMoveEvent event){
+	public void onPlayerToggleSneakEvent(PlayerToggleSneakEvent event){
 		Player p = event.getPlayer();
-		//p.sendMessage(""+p.getFallDistance());
-		//p.sendMessage(""+p.getVelocity().getY());
-		if(playerCanFall(p)){
+		if(!p.isSneaking() && RSMain.enableSneak){
 			p.setGliding(true);
 		}
 	}
@@ -34,17 +37,9 @@ public class RFallListener implements Listener{
 	public void onEntityToggleGlideEvent(EntityToggleGlideEvent event){
 		if(event.getEntity() instanceof Player){
 			Player p = (Player) event.getEntity();
-			if(playerCanFall(p) && p.getLocation().subtract(0, 1, 0).getBlock().getType()!=Material.STATIONARY_WATER){
-				p.setVelocity(new Vector(p.getLocation().getDirection().getX()*RSMain.fallGlideSpeed, RSMain.fallDownwardSpeed*-1, p.getLocation().getDirection().getZ()*RSMain.fallGlideSpeed));
+			if(p.isSneaking() && RSMain.enableSneak){
 				event.setCancelled(true);
 			}
 		}
-	}
-	
-	public boolean playerCanFall(Player p){
-		if(!p.hasMetadata("fallingDisabled")&& RSwimListener.playerHasPermission(p, "rs.user.fall") && p.getFallDistance()>RSMain.minFallDistance && RSMain.enableFall && p.getLocation().getBlock().getType()!=Material.STATIONARY_WATER){
-			return true;
-		}
-		return false;
 	}
 }

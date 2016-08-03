@@ -1,5 +1,5 @@
 name: Realistic-Swimming
-main: realisticSwimming.RSMain
+main: realisticSwimming.main.RSMain
 softdepend: [BossBarAPI]
 version: 1.16.0
 author: 4a2e532e

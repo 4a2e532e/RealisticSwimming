@@ -8,7 +8,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package realisticSwimming;
+package realisticSwimming.stamina;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,6 +19,10 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
+import realisticSwimming.events.PlayerOutOfStaminaEvent;
+import realisticSwimming.events.PlayerStaminaRefreshEvent;
+import realisticSwimming.main.RSMain;
+import realisticSwimming.main.RSwimListener;
 
 public class Stamina extends BukkitRunnable {
 
@@ -34,7 +38,7 @@ public class Stamina extends BukkitRunnable {
 	private StaminaBar staminaBar;
 
 
-	Stamina(Plugin pl, Player player, RSwimListener swimListener){
+	public Stamina(Plugin pl, Player player, RSwimListener swimListener){
 		plugin = pl;
 		p = player;
 		sl = swimListener;
@@ -43,7 +47,7 @@ public class Stamina extends BukkitRunnable {
 	@Override
 	public void run() {
 		if(sl.playerCanSwim(p) && p.isOnline()){
-			timer = 3*20/RSMain.refreshDelay;
+			timer = 3*20/ RSMain.refreshDelay;
 			displayStamina(p);
 			if(stamina>0){
 				if(p.isSprinting()){
@@ -53,10 +57,19 @@ public class Stamina extends BukkitRunnable {
 				}
 			}else{
 				drown(p);
+
+				//Fire PlayerOutOfStaminaEvent
+				PlayerOutOfStaminaEvent event = new PlayerOutOfStaminaEvent(p);
+				Bukkit.getServer().getPluginManager().callEvent(event);
 			}
 		}else if(timer==0 || !p.isOnline()){
 			p.removeMetadata("swimming", plugin);
 			hideStaminaBar();
+
+			//Fire PlayerStaminaRefreshEvent
+			PlayerStaminaRefreshEvent event = new PlayerStaminaRefreshEvent(p);
+			Bukkit.getServer().getPluginManager().callEvent(event);
+
 			this.cancel();
 		}else{
 			timer--;

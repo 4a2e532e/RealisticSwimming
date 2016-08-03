@@ -8,8 +8,9 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package realisticSwimming;
+package realisticSwimming.main;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -24,6 +25,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
+import realisticSwimming.events.PlayerStartSwimmingEvent;
+import realisticSwimming.events.PlayerStopSwimmingEvent;
+import realisticSwimming.stamina.Stamina;
 
 public class RSwimListener implements Listener {
 	
@@ -100,13 +104,29 @@ public class RSwimListener implements Listener {
 		if(p.getLocation().getBlock().getType()==Material.STATIONARY_WATER && p.getLocation().subtract(0, RSMain.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && p.getVehicle()==null && !playerIsInCreativeMode(p) && !p.isFlying()){
 			
 			//start the stamina system
-			startStaminaSystem(p);
+			if(!p.hasMetadata("swimming")){
+				startStaminaSystem(p);
+				FixedMetadataValue m = new FixedMetadataValue(plugin, null);
+				p.setMetadata("swimming", m);
+
+				//Fire PlayerStartSwimmingEvent
+				PlayerStartSwimmingEvent event = new PlayerStartSwimmingEvent(p);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+			}
 			
 			if(playerHasPermission(p, "rs.user.boost") && RSMain.enableBoost){
 				boost(p);
 			}
 			return true;
 		}else{
+			if(p.hasMetadata("swimming")){
+				p.removeMetadata("swimming", plugin);
+
+				//Fire PlayerStopSwimmingEvent
+				PlayerStopSwimmingEvent event = new PlayerStopSwimmingEvent(p);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+			}
+
 			return false;
 		}
 	}
@@ -138,10 +158,8 @@ public class RSwimListener implements Listener {
 	}
 	
 	public void startStaminaSystem(Player p){
-		if(!p.hasMetadata("swimming") && RSMain.enableStamina && (!playerHasPermission(p, "rs.bypass.stamina") || RSMain.permsReq==false)){
-			FixedMetadataValue m = new FixedMetadataValue(plugin, null);
-			p.setMetadata("swimming", m);
-			
+		if(RSMain.enableStamina && (!playerHasPermission(p, "rs.bypass.stamina") || RSMain.permsReq==false)){
+
 			//start stamina system
 			@SuppressWarnings("unused")
 			BukkitTask stamina = new Stamina(plugin, p, this).runTaskTimer(plugin, 0, RSMain.refreshDelay);

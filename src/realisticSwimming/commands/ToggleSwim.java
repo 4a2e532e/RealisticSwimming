@@ -8,20 +8,24 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package realisticSwimming;
+package realisticSwimming.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
+import realisticSwimming.events.PlayerDisableSwimmingEvent;
+import realisticSwimming.events.PlayerEnableSwimmingEvent;
+import realisticSwimming.main.RSMain;
 
 public class ToggleSwim extends RSCommand {
 	
 	private Plugin plugin;
 	private FixedMetadataValue meta;
 	
-	ToggleSwim(Plugin pl) {
+	public ToggleSwim(Plugin pl) {
 		plugin = pl;
 		meta = new FixedMetadataValue(plugin, null);
 	}
@@ -33,10 +37,21 @@ public class ToggleSwim extends RSCommand {
 			if(arg3[0].equalsIgnoreCase("on")){
 				p.removeMetadata("swimmingDisabled", plugin);
 				sendMessage(p, RSMain.swimmingEnabled);
+
+				//Fire PlayerEnableSwimmingEvent
+				PlayerEnableSwimmingEvent event = new PlayerEnableSwimmingEvent(p);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+
 				return true;
+
 			}else if(arg3[0].equalsIgnoreCase("off")){
 				p.setMetadata("swimmingDisabled", meta);
 				sendMessage(p, RSMain.swimmingDisabled);
+
+				//Fire PlayerDisableSwimmingEvent
+				PlayerDisableSwimmingEvent event = new PlayerDisableSwimmingEvent(p);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+
 				return true;
 			}
 		}

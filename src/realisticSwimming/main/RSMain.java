@@ -8,49 +8,59 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package realisticSwimming;
-import java.io.File;
-import java.io.IOException;
+package realisticSwimming.main;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import realisticSwimming.commands.ToggleFall;
+import realisticSwimming.commands.ToggleSwim;
+import realisticSwimming.debug.DebugListener;
+
+import java.io.File;
+import java.io.IOException;
 
 public class RSMain extends JavaPlugin{
 
-	static int minWaterDepth;
-	static boolean enabledInCreative;
-	static boolean permsReq;
-	static boolean enableSwimmingUp;
-	static double sprintSpeed;
-	static boolean enableSneak;
-	static boolean enableFall;
-	static boolean durabilityLoss;
-	static int minFallDistance;
-	static boolean ehmCompatibility;
-	static int sprintStaminaUsage;
-	static int swimStaminaUsage;
-	static boolean enableStamina;
-	static boolean enableDrowning;
-	static String swimmingEnabled;
-	static String swimmingDisabled;
-	static String fallingEnabled;
-	static String fallingDisabled;
-	static String stamina;
-	static double fallGlideSpeed;
-	static double fallDownwardSpeed;
-	static boolean enableBossBar;
-	static int refreshDelay;
-	static boolean enableBoost;
+	public static int minWaterDepth;
+	public static boolean enabledInCreative;
+	public static boolean permsReq;
+	public static boolean enableSwimmingUp;
+	public static double sprintSpeed;
+	public static boolean enableSneak;
+	public static boolean enableFall;
+	public static boolean durabilityLoss;
+	public static int minFallDistance;
+	public static boolean ehmCompatibility;
+	public static int sprintStaminaUsage;
+	public static int swimStaminaUsage;
+	public static boolean enableStamina;
+	public static boolean enableDrowning;
+	public static String swimmingEnabled;
+	public static String swimmingDisabled;
+	public static String fallingEnabled;
+	public static String fallingDisabled;
+	public static String stamina;
+	public static double fallGlideSpeed;
+	public static double fallDownwardSpeed;
+	public static boolean enableBossBar;
+	public static int refreshDelay;
+	public static boolean enableBoost;
 
 	RSwimListener swimListener = new RSwimListener(this);
 	RFallListener fallListener = new RFallListener();
 	RSneakListener sneakListener = new RSneakListener(this);
+	DebugListener debugListener = new DebugListener();
 
 	@Override
 	public void onEnable(){
 		getServer().getPluginManager().registerEvents(swimListener, this);
 		getServer().getPluginManager().registerEvents(fallListener, this);
+
+		//Debug---------------------------------------------------------------------------------------------------------
+		getServer().getPluginManager().registerEvents(debugListener, this);
+		//End debug-----------------------------------------------------------------------------------------------------
+
 		//getServer().getPluginManager().registerEvents(sneakListener, this);
 		this.getCommand("rs").setExecutor(new Reload(this));
 		this.getCommand("swim").setExecutor(new ToggleSwim(this));

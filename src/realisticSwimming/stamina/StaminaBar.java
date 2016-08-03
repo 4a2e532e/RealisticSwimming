@@ -1,10 +1,10 @@
-package realisticSwimming;
+package realisticSwimming.stamina;
 
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 import org.inventivetalent.bossbar.BossBar;
 import org.inventivetalent.bossbar.BossBarAPI;
-
-import net.md_5.bungee.api.chat.TextComponent;
+import realisticSwimming.main.RSMain;
 
 public class StaminaBar {
 	
