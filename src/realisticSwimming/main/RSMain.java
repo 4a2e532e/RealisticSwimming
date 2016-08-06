@@ -58,7 +58,7 @@ public class RSMain extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(fallListener, this);
 
 		//Debug---------------------------------------------------------------------------------------------------------
-		getServer().getPluginManager().registerEvents(debugListener, this);
+		//getServer().getPluginManager().registerEvents(debugListener, this);
 		//End debug-----------------------------------------------------------------------------------------------------
 
 		//getServer().getPluginManager().registerEvents(sneakListener, this);
