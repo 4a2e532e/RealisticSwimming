@@ -26,7 +26,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 import realisticSwimming.events.PlayerStartSwimmingEvent;
-import realisticSwimming.events.PlayerStopSwimmingEvent;
 import realisticSwimming.stamina.Stamina;
 
 public class RSwimListener implements Listener {
@@ -119,14 +118,6 @@ public class RSwimListener implements Listener {
 			}
 			return true;
 		}else{
-			if(p.hasMetadata("swimming")){
-				p.removeMetadata("swimming", plugin);
-
-				//Fire PlayerStopSwimmingEvent
-				PlayerStopSwimmingEvent event = new PlayerStopSwimmingEvent(p);
-				Bukkit.getServer().getPluginManager().callEvent(event);
-			}
-
 			return false;
 		}
 	}
@@ -158,7 +149,10 @@ public class RSwimListener implements Listener {
 	}
 	
 	public void startStaminaSystem(Player p){
-		if(RSMain.enableStamina && (!playerHasPermission(p, "rs.bypass.stamina") || RSMain.permsReq==false)){
+		if(!playerHasPermission(p, "rs.bypass.stamina") || RSMain.permsReq==false){
+
+			//Debug
+			//p.sendMessage("Starting stamina system...");
 
 			//start stamina system
 			@SuppressWarnings("unused")

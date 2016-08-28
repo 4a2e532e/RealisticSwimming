@@ -21,6 +21,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 import realisticSwimming.events.PlayerOutOfStaminaEvent;
 import realisticSwimming.events.PlayerStaminaRefreshEvent;
+import realisticSwimming.events.PlayerStopSwimmingEvent;
 import realisticSwimming.main.RSMain;
 import realisticSwimming.main.RSwimListener;
 
@@ -48,7 +49,11 @@ public class Stamina extends BukkitRunnable {
 	public void run() {
 		if(sl.playerCanSwim(p) && p.isOnline()){
 			timer = 3*20/ RSMain.refreshDelay;
-			displayStamina(p);
+
+			if(RSMain.enableStamina){
+				displayStamina(p);
+			}
+
 			if(stamina>0){
 				if(p.isSprinting()){
 					stamina = stamina-RSMain.sprintStaminaUsage/20*RSMain.refreshDelay;
@@ -56,19 +61,35 @@ public class Stamina extends BukkitRunnable {
 					stamina = stamina-RSMain.swimStaminaUsage/20*RSMain.refreshDelay;
 				}
 			}else{
-				drown(p);
 
-				//Fire PlayerOutOfStaminaEvent
-				PlayerOutOfStaminaEvent event = new PlayerOutOfStaminaEvent(p);
-				Bukkit.getServer().getPluginManager().callEvent(event);
+				if(RSMain.enableStamina){
+					drown(p);
+
+					//Fire PlayerOutOfStaminaEvent
+					PlayerOutOfStaminaEvent event = new PlayerOutOfStaminaEvent(p);
+					Bukkit.getServer().getPluginManager().callEvent(event);
+				}
 			}
 		}else if(timer==0 || !p.isOnline()){
-			p.removeMetadata("swimming", plugin);
-			hideStaminaBar();
 
-			//Fire PlayerStaminaRefreshEvent
-			PlayerStaminaRefreshEvent event = new PlayerStaminaRefreshEvent(p);
-			Bukkit.getServer().getPluginManager().callEvent(event);
+			if(RSMain.enableStamina){
+				hideStaminaBar();
+
+				//Fire PlayerStaminaRefreshEvent
+				PlayerStaminaRefreshEvent event = new PlayerStaminaRefreshEvent(p);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+			}
+
+			if(p.hasMetadata("swimming")){
+
+				//Fire PlayerStopSwimmingEvent
+				PlayerStopSwimmingEvent event = new PlayerStopSwimmingEvent(p);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+			}
+			p.removeMetadata("swimming", plugin);
+
+			//Debug
+			//p.sendMessage("Stopping stamina system...");
 
 			this.cancel();
 		}else{
