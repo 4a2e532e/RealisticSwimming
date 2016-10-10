@@ -16,9 +16,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
+import realisticSwimming.Language;
 import realisticSwimming.events.PlayerDisableFallingEvent;
 import realisticSwimming.events.PlayerEnableFallingEvent;
-import realisticSwimming.main.RSMain;
 
 public class ToggleFall extends RSCommand {
 	
@@ -36,7 +36,7 @@ public class ToggleFall extends RSCommand {
 			Player p = (Player) sender;
 			if(arg3[0].equalsIgnoreCase("on")){
 				p.removeMetadata("fallingDisabled", plugin);
-				sendMessage(p, RSMain.fallingEnabled);
+				sendMessage(p, Language.fallingEnabled);
 
 				//Fire PlayerEnableFallingEvent
 				PlayerEnableFallingEvent event = new PlayerEnableFallingEvent(p);
@@ -46,7 +46,7 @@ public class ToggleFall extends RSCommand {
 
 			}else if(arg3[0].equalsIgnoreCase("off")){
 				p.setMetadata("fallingDisabled", meta);
-				sendMessage(p, RSMain.fallingDisabled);
+				sendMessage(p, Language.fallingDisabled);
 
 				//Fire PlayerDisableFallingEvent
 				PlayerDisableFallingEvent event = new PlayerDisableFallingEvent(p);

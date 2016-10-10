@@ -18,7 +18,6 @@ public abstract class RSCommand implements CommandExecutor {
 	
 	@Override
 	public boolean onCommand(CommandSender arg0, org.bukkit.command.Command arg1, String arg2, String[] arg3) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	

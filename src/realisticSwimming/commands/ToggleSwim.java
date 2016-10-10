@@ -16,9 +16,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
+import realisticSwimming.Language;
 import realisticSwimming.events.PlayerDisableSwimmingEvent;
 import realisticSwimming.events.PlayerEnableSwimmingEvent;
-import realisticSwimming.main.RSMain;
 
 public class ToggleSwim extends RSCommand {
 	
@@ -36,7 +36,7 @@ public class ToggleSwim extends RSCommand {
 			Player p = (Player) sender;
 			if(arg3[0].equalsIgnoreCase("on")){
 				p.removeMetadata("swimmingDisabled", plugin);
-				sendMessage(p, RSMain.swimmingEnabled);
+				sendMessage(p, Language.swimmingEnabled);
 
 				//Fire PlayerEnableSwimmingEvent
 				PlayerEnableSwimmingEvent event = new PlayerEnableSwimmingEvent(p);
@@ -46,7 +46,7 @@ public class ToggleSwim extends RSCommand {
 
 			}else if(arg3[0].equalsIgnoreCase("off")){
 				p.setMetadata("swimmingDisabled", meta);
-				sendMessage(p, RSMain.swimmingDisabled);
+				sendMessage(p, Language.swimmingDisabled);
 
 				//Fire PlayerDisableSwimmingEvent
 				PlayerDisableSwimmingEvent event = new PlayerDisableSwimmingEvent(p);

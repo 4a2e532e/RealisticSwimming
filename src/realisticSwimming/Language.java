@@ -8,36 +8,16 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package realisticSwimming.events;
+package realisticSwimming;
 
-import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
-import realisticSwimming.Config;
-
-public class PlayerOutOfStaminaEvent extends Event {
-
-    private static final HandlerList handlerList = new HandlerList();
-    private Player p;
-
-    @Override
-    public HandlerList getHandlers() {
-        return handlerList;
-    }
-
-    public static HandlerList getHandlerList(){
-        return handlerList;
-    }
-
-    public PlayerOutOfStaminaEvent(Player player){
-        p = player;
-    }
-
-    public Player getPlayer(){
-        return p;
-    }
-
-    public boolean isDrowningEnabled(){
-        return Config.enableDrowning;
-    }
+public class Language {
+    public static String swimmingEnabled;
+    public static String swimmingDisabled;
+    public static String fallingEnabled;
+    public static String fallingDisabled;
+    public static String stamina;
+    public static String tooHeavyToSprint;
+    public static String currentWeight;
+    public static String heavyArmorWarning;
+    public static String maximumSprintingWeightIs;
 }

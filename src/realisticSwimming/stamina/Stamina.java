@@ -19,10 +19,11 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
+import realisticSwimming.Config;
+import realisticSwimming.Language;
 import realisticSwimming.events.PlayerOutOfStaminaEvent;
 import realisticSwimming.events.PlayerStaminaRefreshEvent;
 import realisticSwimming.events.PlayerStopSwimmingEvent;
-import realisticSwimming.main.RSMain;
 import realisticSwimming.main.RSwimListener;
 
 public class Stamina extends BukkitRunnable {
@@ -32,37 +33,47 @@ public class Stamina extends BukkitRunnable {
 
 	private Player p;
 	private int stamina = 1000;
-	private int timer;
+	private int staminaResetTimer;
 	private Scoreboard scoreboard;
 	private Objective staminaObjective;
 	private String oldObjectiveName = "";
 	private StaminaBar staminaBar;
+	private WeightManager weightManager;
 
 
 	public Stamina(Plugin pl, Player player, RSwimListener swimListener){
 		plugin = pl;
 		p = player;
 		sl = swimListener;
+		weightManager = new WeightManager(p);
 	}
 
 	@Override
 	public void run() {
 		if(sl.playerCanSwim(p) && p.isOnline()){
-			timer = 3*20/ RSMain.refreshDelay;
+			staminaResetTimer = 3*20/ Config.staminaUpdateDelay;
 
-			if(RSMain.enableStamina){
+			if(Config.enableStamina){
 				displayStamina(p);
 			}
 
+			adjustSpeedToWeight();
+
 			if(stamina>0){
+				//reduce stamina by base amount without respecting armor weight
 				if(p.isSprinting()){
-					stamina = stamina-RSMain.sprintStaminaUsage/20*RSMain.refreshDelay;
+					stamina = stamina-Config.sprintStaminaUsage/20*Config.staminaUpdateDelay;
 				}else{
-					stamina = stamina-RSMain.swimStaminaUsage/20*RSMain.refreshDelay;
+					stamina = stamina-Config.swimStaminaUsage/20*Config.staminaUpdateDelay;
+				}
+
+				//reduce stamina by armor weight if enabled in the config
+				if(Config.enableArmorWeight){
+					stamina = stamina - weightManager.getWeight();
 				}
 			}else{
 
-				if(RSMain.enableStamina){
+				if(Config.enableStamina){
 					drown(p);
 
 					//Fire PlayerOutOfStaminaEvent
@@ -70,9 +81,9 @@ public class Stamina extends BukkitRunnable {
 					Bukkit.getServer().getPluginManager().callEvent(event);
 				}
 			}
-		}else if(timer==0 || !p.isOnline()){
+		}else if(staminaResetTimer ==0 || !p.isOnline()){
 
-			if(RSMain.enableStamina){
+			if(Config.enableStamina){
 				hideStaminaBar();
 
 				//Fire PlayerStaminaRefreshEvent
@@ -93,7 +104,19 @@ public class Stamina extends BukkitRunnable {
 
 			this.cancel();
 		}else{
-			timer--;
+			staminaResetTimer--;
+		}
+	}
+
+	private void adjustSpeedToWeight(){
+		if(weightManager.getWeight() > Config.maxSprintingWeight && Config.enableArmorWeight){
+			//warn player when trying to sprint but to heavy
+			if(p.isSprinting()){
+				p.sendMessage(ChatColor.RED+Language.tooHeavyToSprint);
+				p.sendMessage(ChatColor.GOLD+Language.currentWeight+" "+ChatColor.RED+weightManager.getWeight()+" "+ChatColor.GOLD+Language.maximumSprintingWeightIs+" "+ChatColor.AQUA+Config.maxSprintingWeight);
+			}
+			//no sprinting when to heavy
+			p.setSprinting(false);
 		}
 	}
 
@@ -109,7 +132,7 @@ public class Stamina extends BukkitRunnable {
 			part2 = part2+"#";
 		}
 
-		staminaBar = RSMain.stamina+": "+part1+ChatColor.GRAY+part2;
+		staminaBar = Language.stamina+": "+part1+ChatColor.GRAY+part2;
 
 		if(stamina>700){
 			staminaBar = ChatColor.GREEN+staminaBar;
@@ -126,13 +149,16 @@ public class Stamina extends BukkitRunnable {
 	private void drown(Player p){
 		p.setSprinting(false);
 
-		if(RSMain.enableDrowning){
+		if(Config.enableDrowning){
+			//drag the player down
 			p.setVelocity(new Vector(0, -1, 0));
+			//prevent the staminaResetTimer from running out, so the stamina does NOT reset and the player drowns
+			staminaResetTimer = 20*20/ Config.staminaUpdateDelay;
 		}
 	}
 	
 	private void updateStaminaBar(String title){
-		if(RSMain.enableBossBar){
+		if(Config.enableBossBar){
 			if(staminaBar == null){
 				initializeBossBar();
 			}else{
@@ -158,7 +184,7 @@ public class Stamina extends BukkitRunnable {
 	private void initializeScoreboard(){
 			scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 			p.setScoreboard(scoreboard);
-			staminaObjective = scoreboard.registerNewObjective(RSMain.stamina, "dummy");
+			staminaObjective = scoreboard.registerNewObjective(Language.stamina, "dummy");
 			staminaObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
 	}
 	
@@ -168,12 +194,12 @@ public class Stamina extends BukkitRunnable {
 	
 	private void hideStaminaBar(){
 		try{
-			if(RSMain.enableBossBar){
+			if(Config.enableBossBar){
 				staminaBar.removeStaminaBar();
 			}else{
 				scoreboard.resetScores(oldObjectiveName);
 			}
-		}catch(NullPointerException e){
+		}catch(NullPointerException ignored){
 			
 		}
 	}

@@ -4,7 +4,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 import org.inventivetalent.bossbar.BossBar;
 import org.inventivetalent.bossbar.BossBarAPI;
-import realisticSwimming.main.RSMain;
+import realisticSwimming.Language;
 
 public class StaminaBar {
 	
@@ -13,7 +13,7 @@ public class StaminaBar {
 	
 	StaminaBar(Player player){
 		p = player;
-		staminaBar = BossBarAPI.addBar(p, new TextComponent(RSMain.stamina), BossBarAPI.Color.GREEN, BossBarAPI.Style.PROGRESS, 1.0f);
+		staminaBar = BossBarAPI.addBar(p, new TextComponent(Language.stamina), BossBarAPI.Color.GREEN, BossBarAPI.Style.PROGRESS, 1.0f);
 	}
 	
 	public void updateBar(float staminaValue){
