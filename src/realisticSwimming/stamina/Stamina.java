@@ -32,7 +32,7 @@ public class Stamina extends BukkitRunnable {
 	private RSwimListener sl;
 
 	private Player p;
-	private int stamina = 1000;
+	private float stamina = 1000;
 	private int staminaResetTimer;
 	private Scoreboard scoreboard;
 	private Objective staminaObjective;
@@ -62,7 +62,7 @@ public class Stamina extends BukkitRunnable {
 			if(stamina>0){
 				//reduce stamina by base amount without respecting armor weight
 				if(p.isSprinting()){
-					stamina = stamina-Config.sprintStaminaUsage/20*Config.staminaUpdateDelay;
+					stamina = stamina-Config.sprintStaminaUsage/20* Config.staminaUpdateDelay;
 				}else{
 					stamina = stamina-Config.swimStaminaUsage/20*Config.staminaUpdateDelay;
 				}
@@ -174,7 +174,7 @@ public class Stamina extends BukkitRunnable {
 			scoreboard = p.getScoreboard();
 			staminaObjective = scoreboard.getObjective(DisplaySlot.SIDEBAR);
 			scoreboard.resetScores(oldObjectiveName);
-			staminaObjective.getScore(title).setScore(stamina);
+			staminaObjective.getScore(title).setScore((int) stamina);
 			oldObjectiveName = title;
 		}catch(NullPointerException e){
 			initializeScoreboard();

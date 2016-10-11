@@ -19,6 +19,9 @@ public class StaminaBar {
 	public void updateBar(float staminaValue){
 		staminaBar.setProgress(staminaValue/1000);
 		setColor(staminaValue);
+
+		//TODO debug
+		//Bukkit.broadcastMessage("Stamina: "+staminaValue);
 	}
 	
 	public void removeStaminaBar(){

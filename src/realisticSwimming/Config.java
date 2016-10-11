@@ -21,8 +21,8 @@ public class Config {
     public static boolean durabilityLoss;
     public static int minFallDistance;
     public static boolean ehmCompatibility;
-    public static int sprintStaminaUsage;
-    public static int swimStaminaUsage;
+    public static float sprintStaminaUsage;
+    public static float swimStaminaUsage;
     public static boolean enableStamina;
     public static boolean enableDrowning;
     public static double fallGlideSpeed;
