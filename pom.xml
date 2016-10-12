@@ -53,7 +53,7 @@
     </plugins>
     <resources>
         <resource>
-            <directory></directory>
+            <directory/>
             <includes>
                 <include>plugin.yml</include>
                 <include>LICENSE.txt</include>
