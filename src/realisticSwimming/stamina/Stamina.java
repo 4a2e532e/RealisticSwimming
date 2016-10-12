@@ -54,7 +54,7 @@ public class Stamina extends BukkitRunnable {
 			staminaResetTimer = 3*20/ Config.staminaUpdateDelay;
 
 			if(Config.enableStamina){
-				displayStamina(p);
+				displayStamina();
 			}
 
 			adjustSpeedToWeight();
@@ -120,7 +120,7 @@ public class Stamina extends BukkitRunnable {
 		}
 	}
 
-	private void displayStamina(Player p){
+	private void displayStamina(){
 		String part1 = "";
 		String part2 = "";
 		String staminaBar;

@@ -54,7 +54,7 @@ public class RSwimListener implements Listener{
                 }
 
                 //EXPERMIMENTAL fix to prevent elytra from loosing durability while swimming
-                if(Config.durabilityLoss==false && elytra!=null && elytra.getType()==Material.ELYTRA && !elytra.getEnchantments().containsKey(Enchantment.DURABILITY)){
+                if(!Config.durabilityLoss && elytra!=null && elytra.getType()==Material.ELYTRA && !elytra.getEnchantments().containsKey(Enchantment.DURABILITY)){
                     ItemMeta meta = elytra.getItemMeta();
                     meta.addEnchant(Enchantment.DURABILITY, 100, true);
                     elytra.setItemMeta(meta);
@@ -92,7 +92,7 @@ public class RSwimListener implements Listener{
         try{
             if(event.getCurrentItem().getType()==Material.ELYTRA && event.getInventory().getHolder() instanceof Player){
                 ItemStack elytra = event.getCurrentItem();
-                if(Config.durabilityLoss==false && elytra!=null && elytra.getType()==Material.ELYTRA && elytra.getEnchantmentLevel(Enchantment.DURABILITY)==100){
+                if(!Config.durabilityLoss && elytra!=null && elytra.getType()==Material.ELYTRA && elytra.getEnchantmentLevel(Enchantment.DURABILITY)==100){
                     ItemMeta meta = elytra.getItemMeta();
                     meta.removeEnchant(Enchantment.DURABILITY);
                     elytra.setItemMeta(meta);
@@ -137,7 +137,7 @@ public class RSwimListener implements Listener{
             //p.sendMessage("Starting stamina system...");
 
             //start stamina system
-            BukkitTask stamina = new Stamina(plugin, p, this).runTaskTimer(plugin, 0, Config.staminaUpdateDelay);
+            @SuppressWarnings("UnusedAssignment") BukkitTask stamina = new Stamina(plugin, p, this).runTaskTimer(plugin, 0, Config.staminaUpdateDelay);
         }
     }
 }

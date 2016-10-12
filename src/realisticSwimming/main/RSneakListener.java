@@ -19,11 +19,8 @@ import org.bukkit.plugin.Plugin;
 import realisticSwimming.Config;
 
 public class RSneakListener implements Listener {
-	
-	private Plugin plugin;
-	
-	RSneakListener(Plugin p){
-		plugin = p;
+
+    RSneakListener(Plugin p){
 	}
 
 	@EventHandler
