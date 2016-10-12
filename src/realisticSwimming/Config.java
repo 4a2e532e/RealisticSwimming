@@ -32,4 +32,7 @@ public class Config {
     public static boolean enableBoost;
     public static boolean enableArmorWeight;
     public static int maxSprintingWeight;
+    public static boolean enableToHeavyToSprintWarning;
+    public static boolean enableHeavyArmorWarningTitle;
+    public static boolean announceWeight;
 }

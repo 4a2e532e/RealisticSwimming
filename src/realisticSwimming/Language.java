@@ -17,7 +17,7 @@ public class Language {
     public static String fallingDisabled;
     public static String stamina;
     public static String tooHeavyToSprint;
-    public static String currentWeight;
+    public static String currentArmorWeight;
     public static String heavyArmorWarning;
     public static String maximumSprintingWeightIs;
 }

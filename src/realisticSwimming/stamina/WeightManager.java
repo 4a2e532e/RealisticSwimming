@@ -44,7 +44,7 @@ public class WeightManager {
 
     private void weightWarning(){
         ChatColor color;
-        if(getWeight() > Config.maxSprintingWeight){
+        if(getWeight() > Config.maxSprintingWeight && Config.enableHeavyArmorWarningTitle){
             color = ChatColor.GOLD;
 
             p.sendTitle(ChatColor.RED+"/"+ChatColor.GOLD+"!"+ChatColor.RED+"\\", ChatColor.GOLD+Language.heavyArmorWarning);
@@ -52,7 +52,9 @@ public class WeightManager {
             color = ChatColor.GREEN;
         }
 
-        p.sendMessage(ChatColor.AQUA+Language.currentWeight+" "+color+getWeight());
+        if(Config.announceWeight){
+            p.sendMessage(ChatColor.AQUA+Language.currentArmorWeight+" "+color+getWeight());
+        }
     }
 
     public int getWeight(){

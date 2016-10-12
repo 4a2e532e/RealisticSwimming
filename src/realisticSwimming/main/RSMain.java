@@ -121,6 +121,15 @@ public class RSMain extends JavaPlugin{
 		config.addDefault("Max sprinting weight", 20);
 		Config.maxSprintingWeight = config.getInt("Max sprinting weight");
 
+		config.addDefault("Warn player when trying to sprint but to heavy", true);
+		Config.enableToHeavyToSprintWarning = config.getBoolean("Warn player when trying to sprint but to heavy");
+
+		config.addDefault("Show fullscreen warning when swimming in heavy armor", true);
+		Config.enableHeavyArmorWarningTitle = config.getBoolean("Show fullscreen warning when swimming in heavy armor");
+
+		config.addDefault("Announce armor weight when starting to swim", true);
+		Config.announceWeight = config.getBoolean("Announce armor weight when starting to swim");
+
 
 		//config for the armor-weight-system
 		config.addDefault("Diamond Helmet Weight", 10);
@@ -213,8 +222,8 @@ public class RSMain extends JavaPlugin{
 		lang.addDefault("Too heavy to sprint", "You are too heavy to sprint!");
 		Language.tooHeavyToSprint = lang.getString("Too heavy to sprint");
 
-		lang.addDefault("Current weight is", "Your current weight is:");
-		Language.currentWeight = lang.getString("Current weight is");
+		lang.addDefault("Current armor weight is", "Your current armor weight is:");
+		Language.currentArmorWeight = lang.getString("Current armor weight is");
 
 		lang.addDefault("Heavy armor warning", "Swimming in heavy armor is a bad idea!");
 		Language.heavyArmorWarning = lang.getString("Heavy armor warning");

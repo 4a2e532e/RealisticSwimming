@@ -111,9 +111,9 @@ public class Stamina extends BukkitRunnable {
 	private void adjustSpeedToWeight(){
 		if(weightManager.getWeight() > Config.maxSprintingWeight && Config.enableArmorWeight){
 			//warn player when trying to sprint but to heavy
-			if(p.isSprinting()){
+			if(p.isSprinting() && Config.enableToHeavyToSprintWarning){
 				p.sendMessage(ChatColor.RED+Language.tooHeavyToSprint);
-				p.sendMessage(ChatColor.GOLD+Language.currentWeight+" "+ChatColor.RED+weightManager.getWeight()+" "+ChatColor.GOLD+Language.maximumSprintingWeightIs+" "+ChatColor.AQUA+Config.maxSprintingWeight);
+				p.sendMessage(ChatColor.GOLD+Language.currentArmorWeight+" "+ChatColor.RED+weightManager.getWeight()+" "+ChatColor.GOLD+Language.maximumSprintingWeightIs+" "+ChatColor.AQUA+Config.maxSprintingWeight);
 			}
 			//no sprinting when to heavy
 			p.setSprinting(false);
