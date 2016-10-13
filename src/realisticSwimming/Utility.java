@@ -12,6 +12,7 @@ package realisticSwimming;
 
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import realisticSwimming.main.RSMain;
 
 public class Utility {
 
@@ -33,5 +34,9 @@ public class Utility {
         }else{
             return false;
         }
+    }
+
+    public static void ncpFix(Player p){
+        p.addAttachment(RSMain.getMain(), "nocheatplus.checks", true, Config.noCheatPlusExemptionTimeInTicks);
     }
 }

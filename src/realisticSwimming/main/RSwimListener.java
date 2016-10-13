@@ -48,6 +48,10 @@ public class RSwimListener implements Listener{
 
                 //Only start swimming animation if the user did not disable it
                 if(!p.hasMetadata("swimmingDisabled") && Utility.playerHasPermission(p, "rs.user.swim")){
+
+                    //fix NCP false alarm
+                    Utility.ncpFix(p);
+
                     p.setGliding(true);
                     startSwimming(p);
                     boost(p);

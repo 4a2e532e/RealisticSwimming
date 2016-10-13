@@ -31,8 +31,16 @@ public class RSMain extends JavaPlugin{
 	RSneakListener sneakListener = new RSneakListener(this);
 	DebugListener debugListener = new DebugListener();
 
+	static RSMain main;
+
+	public static RSMain getMain(){
+		return main;
+	}
+
 	@Override
 	public void onEnable(){
+		main = this;
+
 		getServer().getPluginManager().registerEvents(swimListener, this);
 		getServer().getPluginManager().registerEvents(fallListener, this);
 
@@ -57,6 +65,9 @@ public class RSMain extends JavaPlugin{
 		
 		//setup config
 		FileConfiguration config = this.getConfig();
+
+		config.addDefault("NoCheatPlus exemption ticks (0 = disabled)", 200);
+		Config.noCheatPlusExemptionTimeInTicks = config.getInt("NoCheatPlus exemption ticks (0 = disabled)");
 
 		config.addDefault("Minimal water depth", 1);
 		Config.minWaterDepth = config.getInt("Minimal water depth");

@@ -28,6 +28,10 @@ public class RFallListener implements Listener{
 		//p.sendMessage(""+p.getFallDistance());
 		//p.sendMessage(""+p.getVelocity().getY());
 		if(playerCanFall(p)){
+
+			//fix NCP false alarm
+			Utility.ncpFix(p);
+
 			p.setGliding(true);
 		}
 	}

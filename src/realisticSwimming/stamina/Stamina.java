@@ -193,6 +193,9 @@ public class Stamina extends BukkitRunnable {
 	}
 	
 	private void hideStaminaBar(){
+		// debug
+		//p.sendMessage(ChatColor.DARK_RED + "[DEBUG] "+ChatColor.RED + "Hiding stamina bar...");
+
 		try{
 			if(Config.enableBossBar){
 				staminaBar.removeStaminaBar();
