@@ -122,7 +122,14 @@ public class RSwimListener implements Listener{
 
     public boolean playerCanSwim(Player p){
         if(p.getLocation().getBlock().getType()==Material.STATIONARY_WATER && p.getLocation().subtract(0, Config.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && p.getVehicle()==null && !Utility.playerIsInCreativeMode(p) && !p.isFlying()){
-            return true;
+
+            //TODO make configurable
+            if(!Utility.isInWaterElevator(p)){
+                return true;
+            }else{
+                return false;
+            }
+
         }else{
             return false;
         }

@@ -11,6 +11,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 package realisticSwimming;
 
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import realisticSwimming.main.RSMain;
 
@@ -38,5 +39,20 @@ public class Utility {
 
     public static void ncpFix(Player p){
         p.addAttachment(RSMain.getMain(), "nocheatplus.checks", true, Config.noCheatPlusExemptionTimeInTicks);
+    }
+
+    public static boolean isInWaterElevator(Player p){
+
+        //TODO make configurable
+        int width = 3;
+
+        if(p.getLocation().add(width, 0, 0).getBlock().getType() != Material.STATIONARY_WATER
+                && p.getLocation().add(-width, 0, 0).getBlock().getType() != Material.STATIONARY_WATER
+                && p.getLocation().add(0, 0, width).getBlock().getType() != Material.STATIONARY_WATER
+                && p.getLocation().add(0, 0, -width).getBlock().getType() != Material.STATIONARY_WATER){
+            return true;
+        }else {
+            return false;
+        }
     }
 }
