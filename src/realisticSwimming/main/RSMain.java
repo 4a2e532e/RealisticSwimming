@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2016 4a2e532e
+Copyright (c) 2016-2017 4a2e532e
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -123,8 +123,14 @@ public class RSMain extends JavaPlugin{
 		config.addDefault("Stamina update delay in ticks", 20);
 		Config.staminaUpdateDelay = config.getInt("Stamina update delay in ticks");
 		
-		config.addDefault("Use BossBarApi to display stamina bar (requires BossBarApi to be installed)", false);
-		Config.enableBossBar = config.getBoolean("Use BossBarApi to display stamina bar (requires BossBarApi to be installed)");
+		config.addDefault("Use BossBar to display stamina bar", true);
+		Config.enableBossBar = config.getBoolean("Use BossBar to display stamina bar");
+
+		config.addDefault("Disable swimming animation in waterfalls", true);
+		Config.disableSwimInWaterfall = config.getBoolean("Disable swimming animation in waterfalls");
+
+		config.addDefault("Maximum waterfall diameter", 3);
+		Config.maxWaterfallDiameter = config.getInt("Maximum waterfall diameter");
 
 		config.addDefault("Enable armor-weight", true);
 		Config.enableArmorWeight = config.getBoolean("Enable armor-weight");

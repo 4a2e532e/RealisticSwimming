@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2016 4a2e532e
+Copyright (c) 2016-2017 4a2e532e
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -31,6 +31,8 @@ public class Config {
     public static boolean enableBossBar;
     public static int staminaUpdateDelay;
     public static boolean enableBoost;
+    public static boolean disableSwimInWaterfall;
+    public static int maxWaterfallDiameter;
     public static boolean enableArmorWeight;
     public static int maxSprintingWeight;
     public static boolean enableToHeavyToSprintWarning;
