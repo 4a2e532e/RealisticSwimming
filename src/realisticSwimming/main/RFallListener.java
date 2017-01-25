@@ -18,6 +18,7 @@ import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 import realisticSwimming.Config;
+import realisticSwimming.ElytraPluginCompatibility;
 import realisticSwimming.Utility;
 
 public class RFallListener implements Listener{
@@ -49,6 +50,12 @@ public class RFallListener implements Listener{
 	
 	public boolean playerCanFall(Player p){
 		if(!p.hasMetadata("fallingDisabled")&& Utility.playerHasPermission(p, "rs.user.fall") && p.getFallDistance()>Config.minFallDistance && Config.enableFall && p.getLocation().getBlock().getType()!=Material.STATIONARY_WATER){
+			if(p.getServer().getPluginManager().isPluginEnabled("Elytra")){
+				ElytraPluginCompatibility e = new ElytraPluginCompatibility(p);
+				if(e.isElytraActivating()){
+					return false;
+				}
+			}
 			return true;
 		}
 		return false;

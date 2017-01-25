@@ -10,9 +10,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package realisticSwimming.main;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import realisticSwimming.AACCompatibilityFix;
 import realisticSwimming.Config;
 import realisticSwimming.Language;
 import realisticSwimming.commands.Reload;
@@ -43,7 +47,11 @@ public class RSMain extends JavaPlugin{
 
 		getServer().getPluginManager().registerEvents(swimListener, this);
 		getServer().getPluginManager().registerEvents(fallListener, this);
-
+		if(getServer().getPluginManager().isPluginEnabled("AAC")){
+			AACCompatibilityFix aacListener = new AACCompatibilityFix();
+			getServer().getPluginManager().registerEvents(aacListener, this);
+			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',"[&bRealistic-Swimming&r] &eAAC&r detected. Registering bypass for fly check while swimming."));
+        }
 		//Debug---------------------------------------------------------------------------------------------------------
 		//getServer().getPluginManager().registerEvents(debugListener, this);
 		//End debug-----------------------------------------------------------------------------------------------------

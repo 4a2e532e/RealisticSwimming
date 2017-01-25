@@ -32,9 +32,9 @@ public class ToggleSwim extends RSCommand {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] arg3) {
-		if(sender instanceof Player && arg3.length>0){
+		if(sender instanceof Player && arg2.toLowerCase().equals("swim")){
 			Player p = (Player) sender;
-			if(arg3[0].equalsIgnoreCase("on")){
+			if(p.hasMetadata("swimmingDisabled")){
 				p.removeMetadata("swimmingDisabled", plugin);
 				sendMessage(p, Language.swimmingEnabled);
 
@@ -44,7 +44,7 @@ public class ToggleSwim extends RSCommand {
 
 				return true;
 
-			}else if(arg3[0].equalsIgnoreCase("off")){
+			}else{
 				p.setMetadata("swimmingDisabled", meta);
 				sendMessage(p, Language.swimmingDisabled);
 

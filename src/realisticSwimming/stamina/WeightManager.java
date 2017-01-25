@@ -52,7 +52,8 @@ public class WeightManager {
         weightWarning();
     }
 
-    private void weightWarning(){
+    @SuppressWarnings("deprecation")
+	private void weightWarning(){
         ChatColor color;
         if(getWeight() > Config.maxSprintingWeight && Config.enableHeavyArmorWarningTitle){
             color = ChatColor.GOLD;
@@ -63,7 +64,7 @@ public class WeightManager {
             color = ChatColor.GREEN;
         }
 
-        if(Config.announceWeight){
+        if(Config.announceWeight && Config.enableArmorWeight){
             p.sendMessage(ChatColor.AQUA+Language.currentArmorWeight+" "+color+getWeight());
         }
     }

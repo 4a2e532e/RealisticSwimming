@@ -14,6 +14,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import net.md_5.bungee.api.ChatColor;
+
 public abstract class RSCommand implements CommandExecutor {
 	
 	@Override
@@ -23,7 +25,7 @@ public abstract class RSCommand implements CommandExecutor {
 	
 	public void sendMessage(Player p, String message){
 		if(!message.equalsIgnoreCase("")){
-			p.sendMessage(message);
+			p.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
 		}
 	}
 }

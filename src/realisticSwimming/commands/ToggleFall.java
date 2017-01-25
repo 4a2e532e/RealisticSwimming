@@ -32,9 +32,9 @@ public class ToggleFall extends RSCommand {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] arg3) {
-		if(sender instanceof Player && arg3.length>0){
+		if(sender instanceof Player && arg2.toLowerCase().equals("fall")){
 			Player p = (Player) sender;
-			if(arg3[0].equalsIgnoreCase("on")){
+			if(p.hasMetadata("fallingDisabled")){
 				p.removeMetadata("fallingDisabled", plugin);
 				sendMessage(p, Language.fallingEnabled);
 
@@ -44,7 +44,7 @@ public class ToggleFall extends RSCommand {
 
 				return true;
 
-			}else if(arg3[0].equalsIgnoreCase("off")){
+			}else{
 				p.setMetadata("fallingDisabled", meta);
 				sendMessage(p, Language.fallingDisabled);
 
