@@ -48,6 +48,13 @@
         <type>jar</type>
         <scope>provided</scope>
     </dependency>
+    <dependency>
+        <groupId>me.konsolas.aac</groupId>
+        <artifactId>AAC</artifactId>
+        <version>3.0.2</version>
+        <type>jar</type>
+        <scope>provided</scope>
+    </dependency>
 </dependencies>
   <build>
     <finalName>${project.artifactId}</finalName>

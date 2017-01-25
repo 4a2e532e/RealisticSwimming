@@ -33,12 +33,11 @@ public class StaminaBar_BossBarApi extends StaminaBar{
 		this.staminaBar = BossBarAPI.addBar(p, new TextComponent(component), BossBarAPI.Color.GREEN, BossBarAPI.Style.PROGRESS, 1.0f);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void updateBar(float staminaValue){
 		float progress = staminaValue/1000;
-		if(BossBarAPI.hasBar(p)){
-			currentColor = BossBarAPI.getBossBar(p).getColor();
+		if(!(staminaBar.equals(null))){
+			currentColor = staminaBar.getColor();
 			BossBarAPI.removeAllBars(p);
 		}		
 		staminaBar = BossBarAPI.addBar(p, new TextComponent(component), getColor(staminaValue), BossBarAPI.Style.PROGRESS, progress);
@@ -52,12 +51,11 @@ public class StaminaBar_BossBarApi extends StaminaBar{
 	}
 
 	private Color getColor(float staminaValue){
-		//noinspection StatementWithEmptyBody
 		if(staminaValue > 700){
 			return BossBarAPI.Color.GREEN;
-		}else if(staminaValue > 450){
+		}else if(staminaValue > 400){
 			return BossBarAPI.Color.YELLOW;
-		}else if(staminaValue > 200){
+		}else if(staminaValue > 300){
 			return BossBarAPI.Color.RED;
 		}else{
 			if(currentColor!=null){
