@@ -10,26 +10,38 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package realisticSwimming.stamina;
 
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
+
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.inventivetalent.bossbar.BossBar;
 import org.inventivetalent.bossbar.BossBarAPI;
+import org.inventivetalent.bossbar.BossBarAPI.Color;
+
 import realisticSwimming.Language;
 
 public class StaminaBar_BossBarApi extends StaminaBar{
 	
 	private BossBar staminaBar;
+	private Color currentColor;
+	private BaseComponent[] component;
 
 	StaminaBar_BossBarApi(Player player){
 		super(player);
-		staminaBar = BossBarAPI.addBar(p, new TextComponent(Language.stamina), BossBarAPI.Color.GREEN, BossBarAPI.Style.PROGRESS, 1.0f);
+		this.component = TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&',Language.stamina));
+		this.staminaBar = BossBarAPI.addBar(p, new TextComponent(component), BossBarAPI.Color.GREEN, BossBarAPI.Style.PROGRESS, 1.0f);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void updateBar(float staminaValue){
-		staminaBar.setProgress(staminaValue/1000);
-		setColor(staminaValue);
-
+		float progress = staminaValue/1000;
+		if(BossBarAPI.hasBar(p)){
+			currentColor = BossBarAPI.getBossBar(p).getColor();
+			BossBarAPI.removeAllBars(p);
+		}		
+		staminaBar = BossBarAPI.addBar(p, new TextComponent(component), getColor(staminaValue), BossBarAPI.Style.PROGRESS, progress);
 		//TODO debug
 		//Bukkit.broadcastMessage("Stamina: "+staminaValue);
 	}
@@ -39,27 +51,34 @@ public class StaminaBar_BossBarApi extends StaminaBar{
 		staminaBar.removePlayer(p);
 	}
 
-	@Override
-	protected void setColor(float staminaValue){
+	private Color getColor(float staminaValue){
 		//noinspection StatementWithEmptyBody
 		if(staminaValue > 700){
-			//Do nothing because the bar is already green
-		}else if(staminaValue > 400){
-			staminaBar.setColor(BossBarAPI.Color.YELLOW);
-		}else if(staminaValue > 300){
-			staminaBar.setColor(BossBarAPI.Color.RED);
+			return BossBarAPI.Color.GREEN;
+		}else if(staminaValue > 450){
+			return BossBarAPI.Color.YELLOW;
+		}else if(staminaValue > 200){
+			return BossBarAPI.Color.RED;
 		}else{
-			alert();
+			if(currentColor!=null){
+				if(currentColor == BossBarAPI.Color.RED){
+					return BossBarAPI.Color.YELLOW;
+				}else if(currentColor == BossBarAPI.Color.YELLOW){
+					return BossBarAPI.Color.RED;
+				}
+			}			
 		}
+		return BossBarAPI.Color.RED;
 	}
 
 	@Override
 	protected void alert(){
-		if(staminaBar.getColor() == BossBarAPI.Color.RED){
-			staminaBar.setColor(BossBarAPI.Color.YELLOW);
-		}else if(staminaBar.getColor() == BossBarAPI.Color.YELLOW){
-			staminaBar.setColor(BossBarAPI.Color.RED);
-		}
+		//Not used, but must inherit
+	}
+
+	@Override
+	protected void setColor(float staminaValue) {
+		//Not used, but must inherit
 	}
 
 }
