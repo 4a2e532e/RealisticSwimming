@@ -10,7 +10,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package realisticSwimming.stamina;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import realisticSwimming.Config;
 
@@ -32,11 +31,12 @@ public abstract class StaminaBar {
 
     public static StaminaBar getNewStaminaBar(Player player){
         try{
-            if(Bukkit.getServer().getPluginManager().isPluginEnabled("BossBarAPI")){
+            /*if(Bukkit.getServer().getPluginManager().isPluginEnabled("BossBarAPI")){
                 return new StaminaBar_BossBarApi(player);
             }else{
                 return new StaminaBar_Native(player);
-            }
+            }*/
+            return new StaminaBar_Native(player);
         }catch(Exception ignored){}
 
         Config.enableBossBar = false;
