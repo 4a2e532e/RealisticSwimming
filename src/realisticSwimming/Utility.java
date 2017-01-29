@@ -11,7 +11,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 package realisticSwimming;
 
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+
 import realisticSwimming.main.RSMain;
 
 public class Utility {
@@ -38,5 +42,29 @@ public class Utility {
 
     public static void ncpFix(Player p){
         p.addAttachment(RSMain.getMain(), "nocheatplus.checks", true, Config.noCheatPlusExemptionTimeInTicks);
+    }
+    
+    public static boolean isElytraWeared(Player player) {
+        if (player.getInventory().getChestplate() == null) return false;
+        if (player.getInventory().getChestplate().getType() != Material.ELYTRA) return false;
+        if (player.getInventory().getChestplate().getDurability() >= 431) return false;
+        return true;
+    }
+    
+    public static boolean hasElytraStorage(Player player) {
+    	PlayerInventory inv = player.getInventory();
+    	if(inv.getStorageContents()!=null){
+    		for(ItemStack item : inv.getStorageContents()){
+    			if(item!=null){
+    				if(!item.getType().equals(Material.AIR)){
+            			if(item.getType().equals(Material.ELYTRA)){
+            				if(item.getDurability() <= 431)
+            					return true;
+            			}
+            		}
+    			}     		
+        	}
+    	}
+    	return false;
     }
 }

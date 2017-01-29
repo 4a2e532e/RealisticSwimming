@@ -10,6 +10,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package realisticSwimming.main;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,6 +20,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 import realisticSwimming.Config;
 import realisticSwimming.Utility;
+import realisticSwimming.events.PlayerStartFallingEvent;
 
 public class RFallListener implements Listener{
 
@@ -28,7 +30,9 @@ public class RFallListener implements Listener{
 		//p.sendMessage(""+p.getFallDistance());
 		//p.sendMessage(""+p.getVelocity().getY());
 		if(playerCanFall(p)){
-
+			if(isElytraDeploying(p)){
+				return;
+			}
 			//fix NCP false alarm
 			Utility.ncpFix(p);
 
@@ -41,8 +45,14 @@ public class RFallListener implements Listener{
 		if(event.getEntity() instanceof Player){
 			Player p = (Player) event.getEntity();
 			if(playerCanFall(p) && p.getLocation().subtract(0, 1, 0).getBlock().getType()!=Material.STATIONARY_WATER){
-				p.setVelocity(new Vector(p.getLocation().getDirection().getX()* Config.fallGlideSpeed, Config.fallDownwardSpeed*-1, p.getLocation().getDirection().getZ()*Config.fallGlideSpeed));
-				event.setCancelled(true);
+				PlayerStartFallingEvent e = new PlayerStartFallingEvent(p);
+				Bukkit.getServer().getPluginManager().callEvent(e);
+				if(!e.isCancelled()){
+					p.setVelocity(new Vector(p.getLocation().getDirection().getX()* Config.fallGlideSpeed, Config.fallDownwardSpeed*-1, p.getLocation().getDirection().getZ()*Config.fallGlideSpeed));
+					event.setCancelled(true);
+				}else{
+					p.setGliding(false);
+				}				
 			}
 		}
 	}
@@ -53,4 +63,19 @@ public class RFallListener implements Listener{
 		}
 		return false;
 	}
+	
+	public boolean isElytraDeploying(Player p){
+		if(Bukkit.getPluginManager().isPluginEnabled("Elytra")){
+			if(p.hasPermission("elytra.auto")){
+				if(Utility.isElytraWeared(p)){
+					return true;
+				}else{
+					if(p.hasPermission("elytra.auto-equip") && Utility.hasElytraStorage(p)){
+						return true;
+					}
+				}
+			}
+		}	
+		return false;
+	}	
 }
