@@ -44,6 +44,7 @@ public class Utility {
         p.addAttachment(RSMain.getMain(), "nocheatplus.checks", true, Config.noCheatPlusExemptionTimeInTicks);
     }
     
+    //Changes by DrkMatr1984 start
     public static boolean isElytraWeared(Player player) {
         if (player.getInventory().getChestplate() == null) return false;
         if (player.getInventory().getChestplate().getType() != Material.ELYTRA) return false;
@@ -67,4 +68,5 @@ public class Utility {
     	}
     	return false;
     }
+    //Changes by DrkMatr1984 end
 }
