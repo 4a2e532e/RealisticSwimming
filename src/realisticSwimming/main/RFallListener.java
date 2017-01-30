@@ -30,9 +30,13 @@ public class RFallListener implements Listener{
 		//p.sendMessage(""+p.getFallDistance());
 		//p.sendMessage(""+p.getVelocity().getY());
 		if(playerCanFall(p)){
+			
+			//****************************** Changes by DrkMatr1984 START ******************************
 			if(isElytraDeploying(p)){
 				return;
 			}
+			//****************************** Changes by DrkMatr1984 END ******************************
+			
 			//fix NCP false alarm
 			Utility.ncpFix(p);
 
@@ -45,6 +49,8 @@ public class RFallListener implements Listener{
 		if(event.getEntity() instanceof Player){
 			Player p = (Player) event.getEntity();
 			if(playerCanFall(p) && p.getLocation().subtract(0, 1, 0).getBlock().getType()!=Material.STATIONARY_WATER){
+				
+				//****************************** Changes by DrkMatr1984 START ******************************
 				PlayerStartFallingEvent e = new PlayerStartFallingEvent(p);
 				Bukkit.getServer().getPluginManager().callEvent(e);
 				if(!e.isCancelled()){
@@ -52,7 +58,8 @@ public class RFallListener implements Listener{
 					event.setCancelled(true);
 				}else{
 					p.setGliding(false);
-				}				
+				}
+				//****************************** Changes by DrkMatr1984 END ******************************
 			}
 		}
 	}
@@ -64,6 +71,7 @@ public class RFallListener implements Listener{
 		return false;
 	}
 	
+	//****************************** Changes by DrkMatr1984 START ******************************
 	public boolean isElytraDeploying(Player p){
 		if(Bukkit.getPluginManager().isPluginEnabled("Elytra")){
 			if(p.hasPermission("elytra.auto")){
@@ -77,5 +85,6 @@ public class RFallListener implements Listener{
 			}
 		}	
 		return false;
-	}	
+	}
+	//****************************** Changes by DrkMatr1984 END ******************************
 }
