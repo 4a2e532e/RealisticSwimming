@@ -11,6 +11,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 package realisticSwimming.stamina;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -23,7 +24,10 @@ public class StaminaBar_Native extends StaminaBar {
 
     StaminaBar_Native(Player player){
         super(player);
-        staminaBar = Bukkit.createBossBar(Language.stamina, BarColor.GREEN, BarStyle.SOLID);
+        if(ChatColor.translateAlternateColorCodes('&', Language.stamina).length()>64){
+        	staminaBar = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&', Language.stamina).substring(0, 63), BarColor.GREEN, BarStyle.SOLID);
+        }
+        staminaBar = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&', Language.stamina), BarColor.GREEN, BarStyle.SOLID);
         staminaBar.addPlayer(p);
 
     }

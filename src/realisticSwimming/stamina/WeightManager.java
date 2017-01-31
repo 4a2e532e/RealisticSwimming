@@ -49,7 +49,9 @@ public class WeightManager {
 
     WeightManager(Player player){
         p = player;
-        weightWarning();
+        if(Config.enableArmorWeight){
+        	weightWarning();
+        }     
     }
 
     private void weightWarning(){
@@ -58,13 +60,13 @@ public class WeightManager {
             color = ChatColor.GOLD;
 
             //noinspection deprecation
-            p.sendTitle(ChatColor.RED+"/"+ChatColor.GOLD+"!"+ChatColor.RED+"\\", ChatColor.GOLD+Language.heavyArmorWarning);
+            p.sendTitle(ChatColor.RED+"/"+ChatColor.GOLD+"!"+ChatColor.RED+"\\", ChatColor.GOLD+ChatColor.translateAlternateColorCodes('&', Language.heavyArmorWarning),15,70,20);
         }else{
             color = ChatColor.GREEN;
         }
 
         if(Config.announceWeight){
-            p.sendMessage(ChatColor.AQUA+Language.currentArmorWeight+" "+color+getWeight());
+            p.sendMessage(ChatColor.AQUA+ChatColor.translateAlternateColorCodes('&', Language.currentArmorWeight)+" "+color+getWeight());
         }
     }
 

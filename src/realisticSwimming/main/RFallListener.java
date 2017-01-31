@@ -29,14 +29,7 @@ public class RFallListener implements Listener{
 		Player p = event.getPlayer();
 		//p.sendMessage(""+p.getFallDistance());
 		//p.sendMessage(""+p.getVelocity().getY());
-		if(playerCanFall(p)){
-			
-			//****************************** Changes by DrkMatr1984 START ******************************
-			if(isElytraDeploying(p)){
-				return;
-			}
-			//****************************** Changes by DrkMatr1984 END ******************************
-			
+		if(playerCanFall(p)){			
 			//fix NCP false alarm
 			Utility.ncpFix(p);
 
@@ -66,6 +59,9 @@ public class RFallListener implements Listener{
 	
 	public boolean playerCanFall(Player p){
 		if(!p.hasMetadata("fallingDisabled")&& Utility.playerHasPermission(p, "rs.user.fall") && p.getFallDistance()>Config.minFallDistance && Config.enableFall && p.getLocation().getBlock().getType()!=Material.STATIONARY_WATER){
+			if(isElytraDeploying(p)){
+				return false;
+			}
 			return true;
 		}
 		return false;
