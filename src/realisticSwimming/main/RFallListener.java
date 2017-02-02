@@ -59,9 +59,11 @@ public class RFallListener implements Listener{
 	
 	public boolean playerCanFall(Player p){
 		if(!p.hasMetadata("fallingDisabled")&& Utility.playerHasPermission(p, "rs.user.fall") && p.getFallDistance()>Config.minFallDistance && Config.enableFall && p.getLocation().getBlock().getType()!=Material.STATIONARY_WATER){
+			//****************************** Changes by DrkMatr1984 START ******************************
 			if(isElytraDeploying(p)){
 				return false;
 			}
+			//****************************** Changes by DrkMatr1984 END ******************************
 			return true;
 		}
 		return false;
