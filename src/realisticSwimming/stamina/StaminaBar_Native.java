@@ -24,10 +24,12 @@ public class StaminaBar_Native extends StaminaBar {
 
     StaminaBar_Native(Player player){
         super(player);
+        //****************************** Changes by DrkMatr1984 START ******************************
         if(ChatColor.translateAlternateColorCodes('&', Language.stamina).length()>64)
         	staminaBar = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&', Language.stamina).substring(0, 63), BarColor.GREEN, BarStyle.SOLID);
         else
         	staminaBar = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&', Language.stamina), BarColor.GREEN, BarStyle.SOLID);
+        //****************************** Changes by DrkMatr1984 END ******************************
         staminaBar.addPlayer(p);
 
     }
