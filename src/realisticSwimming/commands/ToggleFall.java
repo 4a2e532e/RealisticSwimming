@@ -38,7 +38,9 @@ public class ToggleFall extends RSCommand {
 			Player p = (Player) sender;
 			if(arg3[0].equalsIgnoreCase("on")){
 				p.removeMetadata("fallingDisabled", plugin);
+				//****************************** Changes by DrkMatr1984 START ******************************
 				sendMessage(p, ChatColor.translateAlternateColorCodes('&', Language.fallingEnabled));
+				//****************************** Changes by DrkMatr1984 END ******************************
 
 				//Fire PlayerEnableFallingEvent
 				PlayerEnableFallingEvent event = new PlayerEnableFallingEvent(p);
@@ -48,8 +50,10 @@ public class ToggleFall extends RSCommand {
 
 			}else if(arg3[0].equalsIgnoreCase("off")){
 				p.setMetadata("fallingDisabled", meta);
+				//****************************** Changes by DrkMatr1984 START ******************************
 				sendMessage(p, ChatColor.translateAlternateColorCodes('&', Language.fallingDisabled));
-
+				//****************************** Changes by DrkMatr1984 END ******************************
+				
 				//Fire PlayerDisableFallingEvent
 				PlayerDisableFallingEvent event = new PlayerDisableFallingEvent(p);
 				Bukkit.getServer().getPluginManager().callEvent(event);
