@@ -112,8 +112,10 @@ public class Stamina extends BukkitRunnable {
 		if(weightManager.getWeight() > Config.maxSprintingWeight && Config.enableArmorWeight){
 			//warn player when trying to sprint but to heavy
 			if(p.isSprinting() && Config.enableToHeavyToSprintWarning){
-				p.sendMessage(ChatColor.RED+Language.tooHeavyToSprint);
-				p.sendMessage(ChatColor.GOLD+Language.currentArmorWeight+" "+ChatColor.RED+weightManager.getWeight()+" "+ChatColor.GOLD+Language.maximumSprintingWeightIs+" "+ChatColor.AQUA+Config.maxSprintingWeight);
+				//****************************** Changes by DrkMatr1984 START ******************************
+				p.sendMessage(ChatColor.RED+ChatColor.translateAlternateColorCodes('&', Language.tooHeavyToSprint ));
+				p.sendMessage(ChatColor.GOLD+ChatColor.translateAlternateColorCodes('&', Language.currentArmorWeight)+" "+ChatColor.RED+weightManager.getWeight()+" "+ChatColor.GOLD+ChatColor.translateAlternateColorCodes('&', Language.maximumSprintingWeightIs)+" "+ChatColor.AQUA+Config.maxSprintingWeight);
+				//****************************** Changes by DrkMatr1984 END ******************************
 			}
 			//no sprinting when to heavy
 			p.setSprinting(false);
@@ -131,8 +133,9 @@ public class Stamina extends BukkitRunnable {
 		for(int i=0; i<10-part1.length(); i++){
 			part2 = part2+"#";
 		}
-
-		staminaBar = Language.stamina+": "+part1+ChatColor.GRAY+part2;
+		//****************************** Changes by DrkMatr1984 START ******************************
+		staminaBar = part1+ChatColor.GRAY+part2;
+		//****************************** Changes by DrkMatr1984 END ******************************
 
 		if(stamina>700){
 			staminaBar = ChatColor.GREEN+staminaBar;
@@ -143,6 +146,10 @@ public class Stamina extends BukkitRunnable {
 		}else{
 			staminaBar = ChatColor.DARK_RED+staminaBar;
 		}
+		//****************************** Changes by DrkMatr1984 START ******************************
+		staminaBar = ChatColor.translateAlternateColorCodes('&', Language.stamina)+ChatColor.RESET+": "+staminaBar;
+		//****************************** Changes by DrkMatr1984 END ******************************
+		
 		updateStaminaBar(staminaBar);
 	}
 
@@ -184,7 +191,12 @@ public class Stamina extends BukkitRunnable {
 	private void initializeScoreboard(){
 			scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 			p.setScoreboard(scoreboard);
-			staminaObjective = scoreboard.registerNewObjective(Language.stamina, "dummy");
+			//****************************** Changes by DrkMatr1984 START ******************************
+			if(ChatColor.translateAlternateColorCodes('&', Language.stamina).length()>16)
+				staminaObjective = scoreboard.registerNewObjective(ChatColor.translateAlternateColorCodes('&', Language.stamina).substring(0, 15), "dummy");
+			else
+				staminaObjective = scoreboard.registerNewObjective(ChatColor.translateAlternateColorCodes('&', Language.stamina), "dummy");
+			//****************************** Changes by DrkMatr1984 END ******************************
 			staminaObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
 	}
 	
