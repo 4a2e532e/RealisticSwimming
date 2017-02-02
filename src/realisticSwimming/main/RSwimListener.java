@@ -147,8 +147,10 @@ public class RSwimListener implements Listener{
             //Debug
             //p.sendMessage("Starting stamina system...");
 
+            //****************************** Changes by DrkMatr1984 START ******************************
             BukkitRunnable stamina = new Stamina(plugin, p, this);
             stamina.runTaskTimer(plugin, 0, Config.staminaUpdateDelay);
+            //****************************** Changes by DrkMatr1984 END ******************************
         }
     }
 
