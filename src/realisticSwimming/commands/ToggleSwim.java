@@ -37,7 +37,9 @@ public class ToggleSwim extends RSCommand {
 			Player p = (Player) sender;
 			if(arg3[0].equalsIgnoreCase("on")){
 				p.removeMetadata("swimmingDisabled", plugin);
+				//****************************** Changes by DrkMatr1984 START ******************************
 				sendMessage(p, ChatColor.translateAlternateColorCodes('&', Language.swimmingEnabled));
+				//****************************** Changes by DrkMatr1984 END ******************************
 
 				//Fire PlayerEnableSwimmingEvent
 				PlayerEnableSwimmingEvent event = new PlayerEnableSwimmingEvent(p);
@@ -47,7 +49,9 @@ public class ToggleSwim extends RSCommand {
 
 			}else if(arg3[0].equalsIgnoreCase("off")){
 				p.setMetadata("swimmingDisabled", meta);
+				//****************************** Changes by DrkMatr1984 START ******************************
 				sendMessage(p, ChatColor.translateAlternateColorCodes('&', Language.swimmingDisabled));
+				//****************************** Changes by DrkMatr1984 END ******************************
 
 				//Fire PlayerDisableSwimmingEvent
 				PlayerDisableSwimmingEvent event = new PlayerDisableSwimmingEvent(p);
