@@ -23,7 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.scheduler.BukkitRunnable;
 import realisticSwimming.Config;
 import realisticSwimming.Utility;
 import realisticSwimming.events.PlayerStartSwimmingEvent;
@@ -147,8 +147,10 @@ public class RSwimListener implements Listener{
             //Debug
             //p.sendMessage("Starting stamina system...");
 
-            //start stamina system
-            @SuppressWarnings("UnusedAssignment") BukkitTask stamina = new Stamina(plugin, p, this).runTaskTimer(plugin, 0, Config.staminaUpdateDelay);
+            //****************************** Changes by DrkMatr1984 START ******************************
+            BukkitRunnable stamina = new Stamina(plugin, p, this);
+            stamina.runTaskTimer(plugin, 0, Config.staminaUpdateDelay);
+            //****************************** Changes by DrkMatr1984 END ******************************
         }
     }
 

@@ -16,6 +16,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
+
+import net.md_5.bungee.api.ChatColor;
 import realisticSwimming.Language;
 import realisticSwimming.events.PlayerDisableFallingEvent;
 import realisticSwimming.events.PlayerEnableFallingEvent;
@@ -36,7 +38,9 @@ public class ToggleFall extends RSCommand {
 			Player p = (Player) sender;
 			if(arg3[0].equalsIgnoreCase("on")){
 				p.removeMetadata("fallingDisabled", plugin);
-				sendMessage(p, Language.fallingEnabled);
+				//****************************** Changes by DrkMatr1984 START ******************************
+				sendMessage(p, ChatColor.translateAlternateColorCodes('&', Language.fallingEnabled));
+				//****************************** Changes by DrkMatr1984 END ******************************
 
 				//Fire PlayerEnableFallingEvent
 				PlayerEnableFallingEvent event = new PlayerEnableFallingEvent(p);
@@ -46,8 +50,10 @@ public class ToggleFall extends RSCommand {
 
 			}else if(arg3[0].equalsIgnoreCase("off")){
 				p.setMetadata("fallingDisabled", meta);
-				sendMessage(p, Language.fallingDisabled);
-
+				//****************************** Changes by DrkMatr1984 START ******************************
+				sendMessage(p, ChatColor.translateAlternateColorCodes('&', Language.fallingDisabled));
+				//****************************** Changes by DrkMatr1984 END ******************************
+				
 				//Fire PlayerDisableFallingEvent
 				PlayerDisableFallingEvent event = new PlayerDisableFallingEvent(p);
 				Bukkit.getServer().getPluginManager().callEvent(event);
