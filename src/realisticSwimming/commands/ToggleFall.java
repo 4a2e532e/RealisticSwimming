@@ -11,13 +11,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 package realisticSwimming.commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
-
-import net.md_5.bungee.api.ChatColor;
 import realisticSwimming.Language;
 import realisticSwimming.events.PlayerDisableFallingEvent;
 import realisticSwimming.events.PlayerEnableFallingEvent;
