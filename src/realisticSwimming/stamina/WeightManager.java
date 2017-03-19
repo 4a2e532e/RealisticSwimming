@@ -61,10 +61,16 @@ public class WeightManager {
         if(getWeight() > Config.maxSprintingWeight && Config.enableHeavyArmorWarningTitle){
             color = ChatColor.GOLD;
 
-            //****************************** Changes by DrkMatr1984 START ******************************
-            //noinspection deprecation
-            p.sendTitle(ChatColor.RED+"/"+ChatColor.GOLD+"!"+ChatColor.RED+"\\", ChatColor.GOLD+ChatColor.translateAlternateColorCodes('&', Language.heavyArmorWarning),15,70,20);
-            //****************************** Changes by DrkMatr1984 END ******************************
+            try{
+                //****************************** Changes by DrkMatr1984 START ******************************
+                //noinspection deprecation
+                p.sendTitle(ChatColor.RED+"/"+ChatColor.GOLD+"!"+ChatColor.RED+"\\", ChatColor.GOLD+ChatColor.translateAlternateColorCodes('&', Language.heavyArmorWarning),15,70,20);
+                //****************************** Changes by DrkMatr1984 END ******************************
+            }catch(NoSuchMethodError e){
+                //Automatically disable this feature if it is not supported by this Minecraft version.
+                Config.enableHeavyArmorWarningTitle = false;
+            }
+
         }else{
             color = ChatColor.GREEN;
         }
