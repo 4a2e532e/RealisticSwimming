@@ -12,6 +12,7 @@ package realisticSwimming.main;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Statistic;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,6 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerStatisticIncrementEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -170,6 +172,14 @@ public class RSwimListener implements Listener{
             return true;
         }else {
             return false;
+        }
+    }
+
+    @EventHandler
+    public void onStatisticIncrement(PlayerStatisticIncrementEvent event){
+        //Don't increment elytra statistic if the player is swimming.
+        if(event.getStatistic() == Statistic.AVIATE_ONE_CM && event.getPlayer().hasMetadata("swimming")){
+            event.setCancelled(true);
         }
     }
 }
