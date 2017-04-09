@@ -24,6 +24,9 @@ public class Config {
     public static boolean ehmCompatibility;
     public static float sprintStaminaUsage;
     public static float swimStaminaUsage;
+    public static int normalStaminaResetTimeSeconds;
+    public static  int drownedStaminaResetTimeSeconds;
+    public static boolean blinkStaminaBarWhenStaminaIsLow;
     public static boolean enableStamina;
     public static boolean enableDrowning;
     public static double fallGlideSpeed;

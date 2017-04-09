@@ -119,6 +119,15 @@ public class RSMain extends JavaPlugin{
 		
 		config.addDefault("Normal swimming stamina usage", 10);
 		Config.swimStaminaUsage = config.getInt("Normal swimming stamina usage");
+
+		config.addDefault("Normal stamina reset time in seconds", 3);
+		Config.normalStaminaResetTimeSeconds = config.getInt("Normal stamina reset time in seconds");
+
+		config.addDefault("Stamina reset time when drowned in seconds", 20);
+		Config.drownedStaminaResetTimeSeconds = config.getInt("Stamina reset time when drowned in seconds");
+
+		config.addDefault("Blink stamina bar when stamina is low", true);
+		Config.blinkStaminaBarWhenStaminaIsLow = config.getBoolean("Blink stamina bar when stamina is low");
 		
 		config.addDefault("Stamina update delay in ticks", 20);
 		Config.staminaUpdateDelay = config.getInt("Stamina update delay in ticks");

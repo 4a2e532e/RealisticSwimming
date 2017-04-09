@@ -51,7 +51,7 @@ public class Stamina extends BukkitRunnable {
 	@Override
 	public void run() {
 		if(sl.playerCanSwim(p) && p.isOnline()){
-			staminaResetTimer = 3*20/ Config.staminaUpdateDelay;
+			staminaResetTimer = Config.normalStaminaResetTimeSeconds*20/ Config.staminaUpdateDelay;
 
 			if(Config.enableStamina){
 				displayStamina();
@@ -160,7 +160,7 @@ public class Stamina extends BukkitRunnable {
 			//drag the player down
 			p.setVelocity(new Vector(0, -1, 0));
 			//prevent the staminaResetTimer from running out, so the stamina does NOT reset and the player drowns
-			staminaResetTimer = 20*20/ Config.staminaUpdateDelay;
+			staminaResetTimer = Config.drownedStaminaResetTimeSeconds *20/ Config.staminaUpdateDelay;
 		}
 	}
 	

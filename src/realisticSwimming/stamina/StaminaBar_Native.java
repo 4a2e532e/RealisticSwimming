@@ -16,6 +16,7 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
+import realisticSwimming.Config;
 import realisticSwimming.Language;
 
 public class StaminaBar_Native extends StaminaBar {
@@ -57,7 +58,7 @@ public class StaminaBar_Native extends StaminaBar {
             staminaBar.setColor(BarColor.YELLOW);
         }else if(staminaValue > 300){
             staminaBar.setColor(BarColor.RED);
-        }else{
+        }else if(Config.blinkStaminaBarWhenStaminaIsLow){
             alert();
         }
     }
