@@ -10,11 +10,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package realisticSwimming.main;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import realisticSwimming.Config;
 import realisticSwimming.Language;
+import realisticSwimming.NoCheatPlusListener;
 import realisticSwimming.commands.Reload;
 import realisticSwimming.commands.ToggleFall;
 import realisticSwimming.commands.ToggleSwim;
@@ -27,7 +29,7 @@ import java.io.IOException;
 public class RSMain extends JavaPlugin{
 
 	RSwimListener swimListener = new RSwimListener(this);
-	RFallListener fallListener = new RFallListener();
+	RFallListener fallListener = new RFallListener(this);
 	RSneakListener sneakListener = new RSneakListener(this);
 	DebugListener debugListener = new DebugListener();
 
@@ -40,6 +42,15 @@ public class RSMain extends JavaPlugin{
 	@Override
 	public void onEnable(){
 		main = this;
+
+		try{
+			if(getServer().getPluginManager().isPluginEnabled("NoCheatPlus")){
+				Bukkit.broadcastMessage("Found NCP");
+				new NoCheatPlusListener();
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 
 		getServer().getPluginManager().registerEvents(swimListener, this);
 		getServer().getPluginManager().registerEvents(fallListener, this);
@@ -66,8 +77,8 @@ public class RSMain extends JavaPlugin{
 		//setup config
 		FileConfiguration config = this.getConfig();
 
-		config.addDefault("NoCheatPlus exemption ticks (0 = disabled)", 200);
-		Config.noCheatPlusExemptionTimeInTicks = config.getInt("NoCheatPlus exemption ticks (0 = disabled)");
+		config.addDefault("NoCheatPlus compatibility mode", true);
+		Config.noCheatPlusCompatibilityMode = config.getBoolean("NoCheatPlus compatibility mode");
 
 		config.addDefault("Minimal water depth", 1);
 		Config.minWaterDepth = config.getInt("Minimal water depth");

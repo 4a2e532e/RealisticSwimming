@@ -35,8 +35,8 @@ public class RSwimListener implements Listener{
 
     private Plugin plugin;
 
-    RSwimListener(Plugin p){
-        plugin = p;
+    RSwimListener(Plugin plugin){
+        this.plugin = plugin;
     }
 
     @EventHandler
@@ -52,7 +52,7 @@ public class RSwimListener implements Listener{
                 if(!p.hasMetadata("swimmingDisabled") && Utility.playerHasPermission(p, "rs.user.swim")){
 
                     //fix NCP false alarm
-                    Utility.ncpFix(p);
+                    //Utility.ncpFix(p);
 
                     p.setGliding(true);
                     startSwimming(p);

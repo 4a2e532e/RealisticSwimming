@@ -11,7 +11,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 package realisticSwimming;
 
 public class Config {
-    public static int noCheatPlusExemptionTimeInTicks;
+    public static boolean noCheatPlusCompatibilityMode;
     public static int minWaterDepth;
     public static boolean enabledInCreative;
     public static boolean permsReq;

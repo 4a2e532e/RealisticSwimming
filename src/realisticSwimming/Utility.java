@@ -16,8 +16,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import realisticSwimming.main.RSMain;
-
 public class Utility {
 
     public static boolean playerHasPermission(Player p, String perm){
@@ -40,9 +38,9 @@ public class Utility {
         }
     }
 
-    public static void ncpFix(Player p){
+    /*public static void ncpFix(Player p){
         p.addAttachment(RSMain.getMain(), "nocheatplus.checks", true, Config.noCheatPlusExemptionTimeInTicks);
-    }
+    }*/
     
     //****************************** Changes by DrkMatr1984 START ******************************
     public static boolean isElytraWeared(Player player) {

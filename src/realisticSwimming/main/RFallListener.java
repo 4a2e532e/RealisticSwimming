@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2016 4a2e532e
+Copyright (c) 2016-2017 4a2e532e
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -17,12 +17,20 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 import realisticSwimming.Config;
 import realisticSwimming.Utility;
 import realisticSwimming.events.PlayerStartFallingEvent;
 
 public class RFallListener implements Listener{
+
+	private Plugin plugin;
+
+	public RFallListener(Plugin plugin){
+		this.plugin = plugin;
+	}
 
 	@EventHandler
 	public void onPlayerMoveEvent(PlayerMoveEvent event){
@@ -31,9 +39,13 @@ public class RFallListener implements Listener{
 		//p.sendMessage(""+p.getVelocity().getY());
 		if(playerCanFall(p)){			
 			//fix NCP false alarm
-			Utility.ncpFix(p);
+			//Utility.ncpFix(p);
 
 			p.setGliding(true);
+			FixedMetadataValue m = new FixedMetadataValue(plugin, null);
+			p.setMetadata("falling", m);
+		}else if(p.hasMetadata("falling")){
+			p.removeMetadata("falling", plugin);
 		}
 	}
 	
