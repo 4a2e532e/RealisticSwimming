@@ -37,7 +37,7 @@ public class NoCheatPlusListener implements NCPHook {
         if(!Config.noCheatPlusCompatibilityMode || APIUtils.needsSynchronization(checkType)){
             return false;
         }
-        if(player.hasMetadata("swimming") || player.hasMetadata("falling")){
+        if((checkType == CheckType.MOVING || checkType == CheckType.FIGHT_FASTHEAL) && (player.hasMetadata("swimming") || player.hasMetadata("falling"))){
             return true;
         }
         return false;
