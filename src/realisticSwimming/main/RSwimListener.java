@@ -19,6 +19,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerStatisticIncrementEvent;
 import org.bukkit.inventory.ItemStack;
@@ -179,6 +180,14 @@ public class RSwimListener implements Listener{
     public void onStatisticIncrement(PlayerStatisticIncrementEvent event){
         //Don't increment elytra statistic if the player is swimming.
         if(event.getStatistic() == Statistic.AVIATE_ONE_CM && event.getPlayer().hasMetadata("swimming")){
+            event.setCancelled(true);
+        }
+    }
+
+    //Block rocket-boost while swimming
+    @EventHandler
+    public void blockRocketBoost(PlayerInteractEvent event){
+        if(event.hasItem() && event.getItem().getType() == Material.FIREWORK && event.getPlayer().hasMetadata("swimming")){
             event.setCancelled(true);
         }
     }
