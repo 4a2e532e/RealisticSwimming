@@ -10,13 +10,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package realisticSwimming.main;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import realisticSwimming.Config;
 import realisticSwimming.Language;
-import realisticSwimming.NoCheatPlusListener;
 import realisticSwimming.commands.Reload;
 import realisticSwimming.commands.ToggleFall;
 import realisticSwimming.commands.ToggleSwim;
@@ -25,6 +23,8 @@ import realisticSwimming.stamina.WeightManager;
 
 import java.io.File;
 import java.io.IOException;
+
+//import realisticSwimming.NoCheatPlusListener;
 
 public class RSMain extends JavaPlugin{
 
@@ -43,6 +43,7 @@ public class RSMain extends JavaPlugin{
 	public void onEnable(){
 		main = this;
 
+		/* Disabled for 1.13
 		try{
 			if(getServer().getPluginManager().isPluginEnabled("NoCheatPlus")){
 				Bukkit.broadcastMessage("Found NCP");
@@ -51,6 +52,7 @@ public class RSMain extends JavaPlugin{
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		*/
 
 		getServer().getPluginManager().registerEvents(swimListener, this);
 		getServer().getPluginManager().registerEvents(fallListener, this);
