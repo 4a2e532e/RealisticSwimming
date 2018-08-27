@@ -124,7 +124,7 @@ public class RSwimListener implements Listener{
     }
 
     public boolean playerCanSwim(Player p){
-        if(p.getLocation().getBlock().getType()==Material.STATIONARY_WATER && p.getLocation().subtract(0, Config.minWaterDepth, 0).getBlock().getType()==Material.STATIONARY_WATER && p.getVehicle()==null && !Utility.playerIsInCreativeMode(p) && !p.isFlying()){
+        if(p.getLocation().getBlock().getType()==Material.LEGACY_STATIONARY_WATER && p.getLocation().subtract(0, Config.minWaterDepth, 0).getBlock().getType()==Material.LEGACY_STATIONARY_WATER && p.getVehicle()==null && !Utility.playerIsInCreativeMode(p) && !p.isFlying()){
 
             //TODO make configurable
             if(!isInWaterElevator(p)){
@@ -166,10 +166,10 @@ public class RSwimListener implements Listener{
         //TODO make configurable
         int width = Config.maxWaterfallDiameter;
 
-        if(p.getLocation().add(width, 0, 0).getBlock().getType() != Material.STATIONARY_WATER
-                && p.getLocation().add(-width, 0, 0).getBlock().getType() != Material.STATIONARY_WATER
-                && p.getLocation().add(0, 0, width).getBlock().getType() != Material.STATIONARY_WATER
-                && p.getLocation().add(0, 0, -width).getBlock().getType() != Material.STATIONARY_WATER){
+        if(p.getLocation().add(width, 0, 0).getBlock().getType() != Material.LEGACY_STATIONARY_WATER
+                && p.getLocation().add(-width, 0, 0).getBlock().getType() != Material.LEGACY_STATIONARY_WATER
+                && p.getLocation().add(0, 0, width).getBlock().getType() != Material.LEGACY_STATIONARY_WATER
+                && p.getLocation().add(0, 0, -width).getBlock().getType() != Material.LEGACY_STATIONARY_WATER){
             return true;
         }else {
             return false;
@@ -187,7 +187,7 @@ public class RSwimListener implements Listener{
     //Block rocket-boost while swimming
     @EventHandler
     public void blockRocketBoost(PlayerInteractEvent event){
-        if(event.hasItem() && event.getItem().getType() == Material.FIREWORK && event.getPlayer().hasMetadata("swimming")){
+        if(event.hasItem() && event.getItem().getType() == Material.FIREWORK_ROCKET && event.getPlayer().hasMetadata("swimming")){
             event.setCancelled(true);
         }
     }

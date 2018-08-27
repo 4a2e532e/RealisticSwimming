@@ -159,16 +159,16 @@ public class WeightManager {
             return chain_Boots_Weight;
         }
 
-        if(item.getType() == Material.GOLD_HELMET){
+        if(item.getType() == Material.GOLDEN_HELMET){
             return gold_Helmet_Weight;
         }
-        if(item.getType() == Material.GOLD_CHESTPLATE){
+        if(item.getType() == Material.GOLDEN_CHESTPLATE){
             return gold_Chestplate_Weight;
         }
-        if(item.getType() == Material.GOLD_LEGGINGS){
+        if(item.getType() == Material.GOLDEN_LEGGINGS){
             return gold_Leggings_Weight;
         }
-        if(item.getType() == Material.GOLD_BOOTS){
+        if(item.getType() == Material.GOLDEN_BOOTS){
             return gold_Boots_Weight;
         }
 
