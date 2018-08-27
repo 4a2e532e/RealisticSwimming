@@ -12,18 +12,11 @@ package realisticSwimming.main;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.Statistic;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityToggleGlideEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerStatisticIncrementEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -55,21 +48,28 @@ public class RSwimListener implements Listener{
                     //fix NCP false alarm
                     //Utility.ncpFix(p);
 
-                    p.setGliding(true);
+                    //p.setGliding(true); Not needed for 1.13
                     startSwimming(p);
                     boost(p);
                 }
 
+                /* Not needed for 1.13
                 //EXPERMIMENTAL fix to prevent elytra from loosing durability while swimming
                 if(!Config.durabilityLoss && elytra!=null && elytra.getType()==Material.ELYTRA && !elytra.getEnchantments().containsKey(Enchantment.DURABILITY)){
                     ItemMeta meta = elytra.getItemMeta();
                     meta.addEnchant(Enchantment.DURABILITY, 100, true);
                     elytra.setItemMeta(meta);
                 }
+                */
 
-            }else if(event.getTo().getY()<=62){
+            }
+            /* Not needed for 1.13
+            else if(event.getTo().getY()<=62){
                 p.setGliding(false);
             }
+            */
+
+        /* Not needed for 1.13
         }else{
 
             //EXPERMIMENTAL fix to prevent elytra from loosing durability while swimming
@@ -78,10 +78,11 @@ public class RSwimListener implements Listener{
                 meta.removeEnchant(Enchantment.DURABILITY);
                 elytra.setItemMeta(meta);
             }
-
+            */
         }
     }
 
+    /* Not needed for 1.13
     @EventHandler
     public void onEntityToggleGlideEvent(EntityToggleGlideEvent event){
         if(event.getEntity() instanceof Player){
@@ -91,8 +92,10 @@ public class RSwimListener implements Listener{
             }
         }
     }
+    */
 
 
+    /* Not needed for 1.13
     //EXPERMIMENTAL fix to prevent elytra from loosing durability while swimming
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent event){
@@ -109,6 +112,7 @@ public class RSwimListener implements Listener{
 
         }
     }
+    */
 
     public void startSwimming(Player p){
         //start the stamina system
@@ -124,14 +128,10 @@ public class RSwimListener implements Listener{
     }
 
     public boolean playerCanSwim(Player p){
-        if(p.getLocation().getBlock().getType()==Material.LEGACY_STATIONARY_WATER && p.getLocation().subtract(0, Config.minWaterDepth, 0).getBlock().getType()==Material.LEGACY_STATIONARY_WATER && p.getVehicle()==null && !Utility.playerIsInCreativeMode(p) && !p.isFlying()){
+        if(p.getLocation().getBlock().getType()==Material.WATER && p.getLocation().subtract(0, Config.minWaterDepth, 0).getBlock().getType()==Material.WATER && p.getVehicle()==null && !Utility.playerIsInCreativeMode(p) && !p.isFlying()){
 
             //TODO make configurable
-            if(!isInWaterElevator(p)){
-                return true;
-            }else{
-                return false;
-            }
+            return !isInWaterElevator(p);
 
         }else{
             return false;
@@ -166,16 +166,17 @@ public class RSwimListener implements Listener{
         //TODO make configurable
         int width = Config.maxWaterfallDiameter;
 
-        if(p.getLocation().add(width, 0, 0).getBlock().getType() != Material.LEGACY_STATIONARY_WATER
-                && p.getLocation().add(-width, 0, 0).getBlock().getType() != Material.LEGACY_STATIONARY_WATER
-                && p.getLocation().add(0, 0, width).getBlock().getType() != Material.LEGACY_STATIONARY_WATER
-                && p.getLocation().add(0, 0, -width).getBlock().getType() != Material.LEGACY_STATIONARY_WATER){
+        if(p.getLocation().add(width, 0, 0).getBlock().getType() != Material.WATER
+                && p.getLocation().add(-width, 0, 0).getBlock().getType() != Material.WATER
+                && p.getLocation().add(0, 0, width).getBlock().getType() != Material.WATER
+                && p.getLocation().add(0, 0, -width).getBlock().getType() != Material.WATER){
             return true;
         }else {
             return false;
         }
     }
 
+    /* Not needed for 1.13
     @EventHandler
     public void onStatisticIncrement(PlayerStatisticIncrementEvent event){
         //Don't increment elytra statistic if the player is swimming.
@@ -183,7 +184,9 @@ public class RSwimListener implements Listener{
             event.setCancelled(true);
         }
     }
+    */
 
+    /* Not needed for 1.13
     //Block rocket-boost while swimming
     @EventHandler
     public void blockRocketBoost(PlayerInteractEvent event){
@@ -191,4 +194,5 @@ public class RSwimListener implements Listener{
             event.setCancelled(true);
         }
     }
+    */
 }
