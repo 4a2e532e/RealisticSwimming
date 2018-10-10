@@ -11,11 +11,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 package realisticSwimming.main;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
@@ -49,8 +51,16 @@ public class RSwimListener implements Listener{
                     //Utility.ncpFix(p);
 
                     //p.setGliding(true); Not needed for 1.13
+                    Location fromIgnoringY = event.getFrom().clone();
+                    fromIgnoringY.setY(0);
+                    Location toIgnoringY = event.getTo().clone();
+                    toIgnoringY.setY(0);
+                    if(fromIgnoringY.distance(toIgnoringY) > 0.097){
+                        p.setSprinting(false);
+                    }
+                    p.setSprinting(true);
                     startSwimming(p);
-                    boost(p);
+                    //boost(p);
                 }
 
                 /* Not needed for 1.13
@@ -113,6 +123,14 @@ public class RSwimListener implements Listener{
         }
     }
     */
+
+    @EventHandler
+    public void onPlayerToggleSprintEvent(PlayerToggleSprintEvent event){
+        Player p = event.getPlayer();
+        if(p.isSwimming() && !event.isSprinting()){
+            p.setSwimming(false);
+        }
+    }
 
     public void startSwimming(Player p){
         //start the stamina system
