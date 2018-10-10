@@ -34,6 +34,7 @@ public class Stamina extends BukkitRunnable {
 	private Player p;
 	private float stamina = 1000;
 	private int staminaResetTimer;
+	private float staminaRefillStepSize;
 	private Scoreboard scoreboard;
 	private Objective staminaObjective;
 	private String oldObjectiveName = "";
@@ -81,6 +82,9 @@ public class Stamina extends BukkitRunnable {
 					Bukkit.getServer().getPluginManager().callEvent(event);
 				}
 			}
+
+			staminaRefillStepSize = (1000 - stamina) / staminaResetTimer;
+
 		}else if(staminaResetTimer ==0 || !p.isOnline()){
 
 			if(Config.enableStamina){
@@ -105,6 +109,11 @@ public class Stamina extends BukkitRunnable {
 			this.cancel();
 		}else{
 			staminaResetTimer--;
+			stamina = Math.min(stamina + staminaRefillStepSize, 1000);
+		}
+
+		if(Config.enableStamina){
+			displayStamina();
 		}
 	}
 
