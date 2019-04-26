@@ -11,14 +11,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 package realisticSwimming.main;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityToggleGlideEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -50,36 +54,28 @@ public class RSwimListener implements Listener{
                     //fix NCP false alarm
                     //Utility.ncpFix(p);
 
-                    //p.setGliding(true); Not needed for 1.13
-                    Location fromIgnoringY = event.getFrom().clone();
-                    fromIgnoringY.setY(0);
-                    Location toIgnoringY = event.getTo().clone();
-                    toIgnoringY.setY(0);
-                    if(fromIgnoringY.distance(toIgnoringY) > 0.097){
-                        p.setSprinting(false);
+                    if(p.isSprinting()){
+                        p.setGliding(false);
+                    }else{
+                        p.setGliding(true);
                     }
-                    p.setSprinting(true);
+
                     startSwimming(p);
                     //boost(p);
                 }
 
-                /* Not needed for 1.13
                 //EXPERMIMENTAL fix to prevent elytra from loosing durability while swimming
                 if(!Config.durabilityLoss && elytra!=null && elytra.getType()==Material.ELYTRA && !elytra.getEnchantments().containsKey(Enchantment.DURABILITY)){
                     ItemMeta meta = elytra.getItemMeta();
                     meta.addEnchant(Enchantment.DURABILITY, 100, true);
                     elytra.setItemMeta(meta);
                 }
-                */
 
             }
-            /* Not needed for 1.13
             else if(event.getTo().getY()<=62){
                 p.setGliding(false);
             }
-            */
 
-        /* Not needed for 1.13
         }else{
 
             //EXPERMIMENTAL fix to prevent elytra from loosing durability while swimming
@@ -88,11 +84,9 @@ public class RSwimListener implements Listener{
                 meta.removeEnchant(Enchantment.DURABILITY);
                 elytra.setItemMeta(meta);
             }
-            */
         }
     }
 
-    /* Not needed for 1.13
     @EventHandler
     public void onEntityToggleGlideEvent(EntityToggleGlideEvent event){
         if(event.getEntity() instanceof Player){
@@ -102,10 +96,7 @@ public class RSwimListener implements Listener{
             }
         }
     }
-    */
 
-
-    /* Not needed for 1.13
     //EXPERMIMENTAL fix to prevent elytra from loosing durability while swimming
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent event){
@@ -122,13 +113,13 @@ public class RSwimListener implements Listener{
 
         }
     }
-    */
 
     @EventHandler
     public void onPlayerToggleSprintEvent(PlayerToggleSprintEvent event){
         Player p = event.getPlayer();
         if(p.isSwimming() && !event.isSprinting()){
             p.setSwimming(false);
+            p.setGliding(true);
         }
     }
 
@@ -204,7 +195,6 @@ public class RSwimListener implements Listener{
     }
     */
 
-    /* Not needed for 1.13
     //Block rocket-boost while swimming
     @EventHandler
     public void blockRocketBoost(PlayerInteractEvent event){
@@ -212,5 +202,4 @@ public class RSwimListener implements Listener{
             event.setCancelled(true);
         }
     }
-    */
 }
