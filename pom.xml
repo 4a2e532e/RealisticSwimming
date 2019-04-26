@@ -44,6 +44,7 @@
     </plugins>
     <resources>
         <resource>
+            <directory/>
             <includes>
                 <include>plugin.yml</include>
                 <include>LICENSE.txt</include>
