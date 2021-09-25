@@ -20,6 +20,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
+
+import io.github.dailystruggle.glide.Glide;
+import io.github.dailystruggle.glide.customEvents.PlayerGlideEvent;
 import realisticSwimming.Config;
 import realisticSwimming.Utility;
 import realisticSwimming.events.PlayerStartFallingEvent;
@@ -27,9 +30,14 @@ import realisticSwimming.events.PlayerStartFallingEvent;
 public class RFallListener implements Listener{
 
 	private Plugin plugin;
+	private boolean glide = false;;
 
 	public RFallListener(Plugin plugin){
 		this.plugin = plugin;
+		if(Bukkit.getServer().getPluginManager().isPluginEnabled("Glide") && 
+				Bukkit.getServer().getPluginManager().getPlugin("Glide")!=null)
+			glide = true;
+			
 	}
 
 	@EventHandler
@@ -69,6 +77,15 @@ public class RFallListener implements Listener{
 		}
 	}
 	
+	@EventHandler
+	public void onPlayerFall(PlayerStartFallingEvent event) {
+		if(glide)
+			if(Glide.isGliding(event.getPlayer())) {
+				event.setCancelled(true);
+			}
+				
+	}
+	
 	public boolean playerCanFall(Player p){
 		if(!p.hasMetadata("fallingDisabled")&& Utility.playerHasPermission(p, "rs.user.fall") && p.getFallDistance()>Config.minFallDistance && Config.enableFall && p.getLocation().getBlock().getType()!=Material.WATER && p.getLocation().subtract(0, 1, 0).getBlock().getType() == Material.AIR){
 			//****************************** Changes by DrkMatr1984 START ******************************
@@ -96,5 +113,6 @@ public class RFallListener implements Listener{
 		}	
 		return false;
 	}
+	
 	//****************************** Changes by DrkMatr1984 END ******************************
 }

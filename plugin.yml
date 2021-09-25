@@ -3,7 +3,7 @@ name: Realistic-Swimming
 main: realisticSwimming.main.RSMain
 version: 1.20.0-BETA
 author: 4a2e532e
-softdepend: [NoCheatPlus]
+softdepend: [NoCheatPlus, Glide]
 commands:
   rs:
     permission: rs.admin.reload
