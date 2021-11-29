@@ -22,7 +22,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 import io.github.dailystruggle.glide.Glide;
-import io.github.dailystruggle.glide.customEvents.PlayerGlideEvent;
 import realisticSwimming.Config;
 import realisticSwimming.Utility;
 import realisticSwimming.events.PlayerStartFallingEvent;

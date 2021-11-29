@@ -10,6 +10,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package realisticSwimming.main;
 
+import java.util.HashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -34,9 +36,13 @@ import realisticSwimming.stamina.Stamina;
 public class RSwimListener implements Listener{
 
     private Plugin plugin;
+    private HashMap<Player, Stamina> playerStamina;
 
     RSwimListener(Plugin plugin){
         this.plugin = plugin;
+        if(Config.enableStamina) {
+        	playerStamina = new HashMap<Player, Stamina>();
+        }
     }
 
     @EventHandler
@@ -160,8 +166,10 @@ public class RSwimListener implements Listener{
             //p.sendMessage("Starting stamina system...");
 
             //****************************** Changes by DrkMatr1984 START ******************************
-            BukkitRunnable stamina = new Stamina(plugin, p, this);
+            Stamina stamina = new Stamina(plugin, p, this);
             stamina.runTaskTimer(plugin, 0, Config.staminaUpdateDelay);
+            playerStamina.put(p, stamina);
+            
             //****************************** Changes by DrkMatr1984 END ******************************
         }
     }
@@ -202,4 +210,17 @@ public class RSwimListener implements Listener{
             event.setCancelled(true);
         }
     }
+    
+    public float getPlayerStamina(Player player) {
+    	if(playerStamina.containsKey(player)) {
+    		if(playerStamina.get(player).isCancelled())
+    			return 1000;
+    		if(playerStamina.get(player).getCurrentStamina() > 0)
+    			return playerStamina.get(player).getCurrentStamina();
+    		else
+    			playerStamina.get(player).cancel();
+    	}
+    	return 1000;
+    }
+    
 }
