@@ -227,5 +227,10 @@ public class Stamina extends BukkitRunnable {
 			
 		}
 	}
+	
+	public float getCurrentStamina()
+	{
+		return stamina;
+	}
 
 }

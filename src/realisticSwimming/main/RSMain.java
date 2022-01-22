@@ -10,8 +10,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 package realisticSwimming.main;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import realisticSwimming.Config;
 import realisticSwimming.Language;
@@ -53,7 +55,9 @@ public class RSMain extends JavaPlugin{
 			e.printStackTrace();
 		}
 		*/
-
+        
+		loadConfig();
+		
 		getServer().getPluginManager().registerEvents(swimListener, this);
 		getServer().getPluginManager().registerEvents(fallListener, this);
 
@@ -65,8 +69,12 @@ public class RSMain extends JavaPlugin{
 		this.getCommand("rs").setExecutor(new Reload(this));
 		this.getCommand("swim").setExecutor(new ToggleSwim(this));
 		this.getCommand("fall").setExecutor(new ToggleFall(this));
-
-		loadConfig();
+        
+		if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+        	this.getServer().getLogger().info("Hooked into PlaceholderAPI!");
+        	new realisticSwimming.Placeholders(this).register();
+        }
+			
 	}
 
 	@Override
@@ -277,5 +285,9 @@ public class RSMain extends JavaPlugin{
 		} catch (IOException ignored) {
 
 		}
+	}
+	
+	public float getPlayerStamina(Player player) {
+		return swimListener.getPlayerStamina(player);
 	}
 }
